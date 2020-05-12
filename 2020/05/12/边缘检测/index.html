@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"zyx1105.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="边缘检测  利用梯度算子进行边缘检测  BW &#x3D;edge( I,type,thresh,direction,’nothinning’)  type: ‘roberts’、’sobel’、’prewitt’(算子选择)  thresh：敏感度预置参数。灰度低于预置的边缘将不会被检测到。（系统自动设定参数）  direction:’vertical’、’horizontal’、’both’  ‘not">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://zyx1105.github.io/2020/05/12/hello-world/index.html">
+<meta property="og:title" content="边缘检测">
+<meta property="og:url" content="https://zyx1105.github.io/2020/05/12/%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/index.html">
 <meta property="og:site_name" content="Welcome to my Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="边缘检测  利用梯度算子进行边缘检测  BW &#x3D;edge( I,type,thresh,direction,’nothinning’)  type: ‘roberts’、’sobel’、’prewitt’(算子选择)  thresh：敏感度预置参数。灰度低于预置的边缘将不会被检测到。（系统自动设定参数）  direction:’vertical’、’horizontal’、’both’  ‘not">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-05-12T10:17:42.921Z">
-<meta property="article:modified_time" content="2020-05-12T10:17:42.921Z">
+<meta property="article:published_time" content="2020-05-12T14:58:11.958Z">
+<meta property="article:modified_time" content="2019-08-03T08:16:40.653Z">
 <meta property="article:author" content="Zyx">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://zyx1105.github.io/2020/05/12/hello-world/">
+<link rel="canonical" href="https://zyx1105.github.io/2020/05/12/%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Hello World | Welcome to my Blog</title>
+  <title>边缘检测 | Welcome to my Blog</title>
   
 
 
@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2020/05/12/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2020/05/12/%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          边缘检测
         </h1>
 
         <div class="post-meta">
@@ -188,8 +188,15 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-05-12 18:17:42" itemprop="dateCreated datePublished" datetime="2020-05-12T18:17:42+08:00">2020-05-12</time>
+              <time title="Created: 2020-05-12 22:58:11" itemprop="dateCreated datePublished" datetime="2020-05-12T22:58:11+08:00">2020-05-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-08-03 16:16:40" itemprop="dateModified" datetime="2019-08-03T16:16:40+08:00">2019-08-03</time>
+              </span>
 
           
 
@@ -202,19 +209,53 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <p>边缘检测</p>
+<ul>
+<li><p>利用梯度算子进行边缘检测</p>
+<ul>
+<li><p>BW =edge( I,type,thresh,direction,’nothinning’)</p>
+</li>
+<li><p>type: ‘roberts’、’sobel’、’prewitt’(算子选择)</p>
+</li>
+<li><p>thresh：敏感度预置参数。灰度低于预置的边缘将不会被检测到。（系统自动设定参数）</p>
+</li>
+<li><p>direction:’vertical’、’horizontal’、’both’</p>
+</li>
+<li><p>‘nothinning’:无细节处理，默认’thinning’</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">'C:\Users\Lenovo\Desktop\lena.jpg'</span>);</span><br><span class="line">I= rgb2gray(I);</span><br><span class="line">BW1 = edge(I,<span class="string">'roberts'</span>);</span><br><span class="line">BW2 = edge(I,<span class="string">'sobel'</span>);</span><br><span class="line">BW3 = edge(I,<span class="string">'prewitt'</span>);</span><br><span class="line"><span class="built_in">figure</span></span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>),imshow(I),title(<span class="string">'orignal'</span>)</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>),imshow(BW1),title(<span class="string">'roberts'</span>)</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>),imshow(BW2),title(<span class="string">'sobel'</span>)</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>),imshow(BW3),title(<span class="string">'prewitt'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>带方向的边缘检测：Robinson算子</p>
+</li>
+<li><pre><code class="matlab">N=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>
+    <span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>
+    <span class="number">-1</span>,<span class="number">-2</span>,<span class="number">-1</span>];
+edge_n = imfilter(I,N,<span class="string">'symmetric'</span>,<span class="string">'conv'</span>);
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+&lt;!--￼<span class="number">1</span>--&gt;
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+</code></pre>
+</li>
+</ul>
+<ul>
+<li><p>Canny边缘检测</p>
+<ul>
+<li><p>Canny 准则：</p>
+<ul>
+<li>好的检测效果：对边缘检测的错误尽可能低</li>
+<li>边缘的定位要准确</li>
+<li>同一边缘要有低的相应次数</li>
+</ul>
+</li>
+<li><p>Canny边缘检测算法：</p>
+</li>
+<li><p>Canny实现：BW=edge(I,’canny’,thresh.sigma)</p>
+</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -230,13 +271,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/10/24/%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2%EF%BC%8C%E5%8F%8C%E8%BE%B9%E6%BB%A4%E6%B3%A2/" rel="prev" title="中值滤波，双边滤波">
-      <i class="fa fa-chevron-left"></i> 中值滤波，双边滤波
+    <a href="/2020/05/12/%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E5%A4%84%E7%90%86/" rel="prev" title="图像的形态学处理">
+      <i class="fa fa-chevron-left"></i> 图像的形态学处理
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/05/12/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E5%83%8F%E7%BC%A9%E6%94%BE%EF%BC%8C%E5%9B%BE%E5%83%8F%E6%97%8B%E8%BD%AC%20/" rel="next" title="插值算法，图像缩放，图像旋转 ">
-      插值算法，图像缩放，图像旋转  <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -295,7 +333,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

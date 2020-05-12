@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"zyx1105.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="图像的形态学处理  图像腐蚀：对于确定的结构元素，通过腐蚀运算可以消除小于结构元素的点。同时，若一个目标区域中含有细小的连接部分，可以通过腐蚀处理对区域进行分割。（imerode) 腐蚀结果一定是原目标图像的一个子集，即原图像的收缩。 图像的膨胀：定义一个结构元素，从图像左上角开始，按顺序移动结构元素的位置，当结构元素位于某坐标上时，且此时结构元素与目标图像存在交集，则保留坐标上的像素点，否则删除">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://zyx1105.github.io/2020/05/12/hello-world/index.html">
+<meta property="og:title" content="图像的形态学处理">
+<meta property="og:url" content="https://zyx1105.github.io/2020/05/12/%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E5%A4%84%E7%90%86/index.html">
 <meta property="og:site_name" content="Welcome to my Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="图像的形态学处理  图像腐蚀：对于确定的结构元素，通过腐蚀运算可以消除小于结构元素的点。同时，若一个目标区域中含有细小的连接部分，可以通过腐蚀处理对区域进行分割。（imerode) 腐蚀结果一定是原目标图像的一个子集，即原图像的收缩。 图像的膨胀：定义一个结构元素，从图像左上角开始，按顺序移动结构元素的位置，当结构元素位于某坐标上时，且此时结构元素与目标图像存在交集，则保留坐标上的像素点，否则删除">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-05-12T10:17:42.921Z">
-<meta property="article:modified_time" content="2020-05-12T10:17:42.921Z">
+<meta property="article:published_time" content="2020-05-12T14:58:03.722Z">
+<meta property="article:modified_time" content="2019-08-03T07:05:00.543Z">
 <meta property="article:author" content="Zyx">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://zyx1105.github.io/2020/05/12/hello-world/">
+<link rel="canonical" href="https://zyx1105.github.io/2020/05/12/%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E5%A4%84%E7%90%86/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Hello World | Welcome to my Blog</title>
+  <title>图像的形态学处理 | Welcome to my Blog</title>
   
 
 
@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2020/05/12/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2020/05/12/%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E5%A4%84%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          图像的形态学处理
         </h1>
 
         <div class="post-meta">
@@ -188,8 +188,15 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-05-12 18:17:42" itemprop="dateCreated datePublished" datetime="2020-05-12T18:17:42+08:00">2020-05-12</time>
+              <time title="Created: 2020-05-12 22:58:03" itemprop="dateCreated datePublished" datetime="2020-05-12T22:58:03+08:00">2020-05-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-08-03 15:05:00" itemprop="dateModified" datetime="2019-08-03T15:05:00+08:00">2019-08-03</time>
+              </span>
 
           
 
@@ -202,19 +209,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>图像的形态学处理</p>
+<ul>
+<li>图像腐蚀：对于确定的结构元素，通过腐蚀运算可以消除小于结构元素的点。同时，若一个目标区域中含有细小的连接部分，可以通过腐蚀处理对区域进行分割。（imerode)</li>
+<li>腐蚀结果一定是原目标图像的一个子集，即原图像的收缩。</li>
+<li>图像的膨胀：定义一个结构元素，从图像左上角开始，按顺序移动结构元素的位置，当结构元素位于某坐标上时，且此时结构元素与目标图像存在交集，则保留坐标上的像素点，否则删除此坐标上的像素点。（imdilate)</li>
+<li>腐蚀和膨胀的性质：对偶性，单调性，递减性，交换率（仅适用于图像膨胀），结合律，集合运算，平移不变性</li>
+<li>A目标图像，S结构元素</li>
+<li>膨胀：A+S；腐蚀：A-S；开运算：（A-S)+S; 闭运算：(A+S)-S</li>
+<li>开运算：先腐蚀后膨胀（图像有损），只有附近有完整像素的才会保留，可用于消噪。（I2= imopen(I,SE))</li>
+<li>闭运算：先膨胀后腐蚀（图片有损），对目标图像分开的区域进行连接及对图像中的细小缝隙进行填补。(I2= imclose(I,SE))</li>
+<li>开运算和闭运算的性质：</li>
+<li>对偶性，扩展性，单调性，平移性，等幂性。</li>
+<li>其他运算：</li>
+<li>击中/不击中运算：可用于目标识别。（I2 = bwhitmiss(I,S1,S2))(S1:击中的结构元素.S2:不击中的结构元素)</li>
+<li>细节处理:在保留源图像几何形状的前提下,尽量减少图像所包含的信息量.获得图像的骨架.</li>
+<li>算法描述:<ul>
+<li>计算当前像素领域内8个方向的可见像素数目,如果少于2个像素,则删除此像素会缩短图像骨架长度;若多于6个元素,则删除会改变图像骨架的几何形状.</li>
+<li>计算当前像素周围领域内的区域数目,如果多于1 个,那么删除中心像素会将目标图像分解成不同部分.(I2= bwmorph(I,’thin’,inf))（inf:无穷大）</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -230,12 +245,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/10/24/%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2%EF%BC%8C%E5%8F%8C%E8%BE%B9%E6%BB%A4%E6%B3%A2/" rel="prev" title="中值滤波，双边滤波">
-      <i class="fa fa-chevron-left"></i> 中值滤波，双边滤波
+    <a href="/2020/05/12/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E5%83%8F%E7%BC%A9%E6%94%BE%EF%BC%8C%E5%9B%BE%E5%83%8F%E6%97%8B%E8%BD%AC%20/" rel="prev" title="插值算法，图像缩放，图像旋转 ">
+      <i class="fa fa-chevron-left"></i> 插值算法，图像缩放，图像旋转 
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/05/12/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E5%83%8F%E7%BC%A9%E6%94%BE%EF%BC%8C%E5%9B%BE%E5%83%8F%E6%97%8B%E8%BD%AC%20/" rel="next" title="插值算法，图像缩放，图像旋转 ">
-      插值算法，图像缩放，图像旋转  <i class="fa fa-chevron-right"></i>
+    <a href="/2020/05/12/%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B/" rel="next" title="边缘检测">
+      边缘检测 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -295,7 +310,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

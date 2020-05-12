@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"zyx1105.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="图像预处理：（输入与输出都是亮度值—&gt;亮度值矩阵） 像素亮度变换  相关位置的亮度校正 1.退化是系统的。e(i,j)—&gt;理想情况下的错误系数；g(i,j)—&gt;原来没有退化的图像;f(i,j)—&gt;退化之后的图像； f&#x3D;e*g; eg.    描述几何变换  考虑使用待处理像素的一个局部领域的方法  介绍需要有关整个图像知识的图象复原技术   在matlab终彩色图像的表示">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://zyx1105.github.io/2020/05/12/hello-world/index.html">
+<meta property="og:title" content="图像预处理：（输入与输出都是亮度值—亮度值矩阵）">
+<meta property="og:url" content="https://zyx1105.github.io/2019/10/24/%E5%9B%BE%E5%83%8F%E9%A2%84%E5%A4%84%E7%90%86%EF%BC%9A%EF%BC%88%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA%E9%83%BD%E6%98%AF%E4%BA%AE%E5%BA%A6%E5%80%BC%E2%80%94%E4%BA%AE%E5%BA%A6%E5%80%BC%E7%9F%A9%E9%98%B5%EF%BC%89/index.html">
 <meta property="og:site_name" content="Welcome to my Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="图像预处理：（输入与输出都是亮度值—&gt;亮度值矩阵） 像素亮度变换  相关位置的亮度校正 1.退化是系统的。e(i,j)—&gt;理想情况下的错误系数；g(i,j)—&gt;原来没有退化的图像;f(i,j)—&gt;退化之后的图像； f&#x3D;e*g; eg.    描述几何变换  考虑使用待处理像素的一个局部领域的方法  介绍需要有关整个图像知识的图象复原技术   在matlab终彩色图像的表示">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-05-12T10:17:42.921Z">
-<meta property="article:modified_time" content="2020-05-12T10:17:42.921Z">
+<meta property="article:published_time" content="2019-10-24T11:16:39.570Z">
+<meta property="article:modified_time" content="2019-05-29T09:41:27.527Z">
 <meta property="article:author" content="Zyx">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://zyx1105.github.io/2020/05/12/hello-world/">
+<link rel="canonical" href="https://zyx1105.github.io/2019/10/24/%E5%9B%BE%E5%83%8F%E9%A2%84%E5%A4%84%E7%90%86%EF%BC%9A%EF%BC%88%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA%E9%83%BD%E6%98%AF%E4%BA%AE%E5%BA%A6%E5%80%BC%E2%80%94%E4%BA%AE%E5%BA%A6%E5%80%BC%E7%9F%A9%E9%98%B5%EF%BC%89/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Hello World | Welcome to my Blog</title>
+  <title>图像预处理：（输入与输出都是亮度值—亮度值矩阵） | Welcome to my Blog</title>
   
 
 
@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2020/05/12/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2019/10/24/%E5%9B%BE%E5%83%8F%E9%A2%84%E5%A4%84%E7%90%86%EF%BC%9A%EF%BC%88%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA%E9%83%BD%E6%98%AF%E4%BA%AE%E5%BA%A6%E5%80%BC%E2%80%94%E4%BA%AE%E5%BA%A6%E5%80%BC%E7%9F%A9%E9%98%B5%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          图像预处理：（输入与输出都是亮度值—亮度值矩阵）
         </h1>
 
         <div class="post-meta">
@@ -188,8 +188,15 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-05-12 18:17:42" itemprop="dateCreated datePublished" datetime="2020-05-12T18:17:42+08:00">2020-05-12</time>
+              <time title="Created: 2019-10-24 19:16:39" itemprop="dateCreated datePublished" datetime="2019-10-24T19:16:39+08:00">2019-10-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-05-29 17:41:27" itemprop="dateModified" datetime="2019-05-29T17:41:27+08:00">2019-05-29</time>
+              </span>
 
           
 
@@ -202,19 +209,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h3 id="图像预处理：（输入与输出都是亮度值—-gt-亮度值矩阵）"><a href="#图像预处理：（输入与输出都是亮度值—-gt-亮度值矩阵）" class="headerlink" title="图像预处理：（输入与输出都是亮度值—&gt;亮度值矩阵）"></a>图像预处理：（输入与输出都是亮度值—&gt;亮度值矩阵）</h3><ul>
+<li><p>像素亮度变换</p>
+<ul>
+<li><p>相关位置的亮度校正</p>
+<p>1.退化是系统的。e(i,j)—&gt;理想情况下的错误系数；g(i,j)—&gt;原来没有退化的图像;f(i,j)—&gt;退化之后的图像；</p>
+<p>f=e*g;</p>
+<p>eg.</p>
+</li>
+</ul>
+</li>
+<li><p>描述几何变换</p>
+</li>
+<li><p>考虑使用待处理像素的一个局部领域的方法</p>
+</li>
+<li><p>介绍需要有关整个图像知识的图象复原技术</p>
+</li>
+</ul>
+<p>在matlab终彩色图像的表示</p>
+<ul>
+<li><p>RGB图像（MxNx3)：rab_image=cat(dim,A1,A2…)</p>
+<hr>
+</li>
+</ul>
+<p>   获得质量较好的图像可采用如下原则：</p>
+<ul>
+<li>对缓变的图像，应该细量化，粗采样，以避免假轮廓</li>
+<li>对细节丰富的图像，应系采样，粗量化，避免模糊。</li>
+</ul>
 
     </div>
 
@@ -230,12 +252,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/10/24/%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2%EF%BC%8C%E5%8F%8C%E8%BE%B9%E6%BB%A4%E6%B3%A2/" rel="prev" title="中值滤波，双边滤波">
-      <i class="fa fa-chevron-left"></i> 中值滤波，双边滤波
+    <a href="/2019/10/24/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2/" rel="prev" title="图像分割">
+      <i class="fa fa-chevron-left"></i> 图像分割
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/05/12/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95%EF%BC%8C%E5%9B%BE%E5%83%8F%E7%BC%A9%E6%94%BE%EF%BC%8C%E5%9B%BE%E5%83%8F%E6%97%8B%E8%BD%AC%20/" rel="next" title="插值算法，图像缩放，图像旋转 ">
-      插值算法，图像缩放，图像旋转  <i class="fa fa-chevron-right"></i>
+    <a href="/2019/10/24/%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2%EF%BC%8C%E5%8F%8C%E8%BE%B9%E6%BB%A4%E6%B3%A2/" rel="next" title="中值滤波，双边滤波">
+      中值滤波，双边滤波 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -295,7 +317,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#图像预处理：（输入与输出都是亮度值—-gt-亮度值矩阵）"><span class="nav-number">1.</span> <span class="nav-text">图像预处理：（输入与输出都是亮度值—&gt;亮度值矩阵）</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

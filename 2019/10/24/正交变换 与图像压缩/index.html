@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zyx1105.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="正交变换 与图像压缩 傅里叶变换  时域连续—&gt;频域非周期  时域的非周期—&gt;频域连续   ​                          图像的频率—&gt;图像中灰度变化的剧烈程度的指标。 傅里叶频谱图上看到的亮点实际是图像上某一点与领域点差异的强弱，即梯度的大小。梯度大，亮度强。 快速傅里叶变换（FFT)：  蝶形算法  码位倒序：将十进制转换成二进制，然后将二进制的序列倒">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正交变换 与图像压缩">
+<meta property="og:url" content="https://zyx1105.github.io/2019/10/24/%E6%AD%A3%E4%BA%A4%E5%8F%98%E6%8D%A2%20%E4%B8%8E%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9/index.html">
+<meta property="og:site_name" content="Welcome to my Blog">
+<meta property="og:description" content="正交变换 与图像压缩 傅里叶变换  时域连续—&gt;频域非周期  时域的非周期—&gt;频域连续   ​                          图像的频率—&gt;图像中灰度变化的剧烈程度的指标。 傅里叶频谱图上看到的亮点实际是图像上某一点与领域点差异的强弱，即梯度的大小。梯度大，亮度强。 快速傅里叶变换（FFT)：  蝶形算法  码位倒序：将十进制转换成二进制，然后将二进制的序列倒">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-10-24T11:16:39.519Z">
+<meta property="article:modified_time" content="2019-08-04T10:07:26.810Z">
+<meta property="article:author" content="Zyx">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://zyx1105.github.io/2019/10/24/%E6%AD%A3%E4%BA%A4%E5%8F%98%E6%8D%A2%20%E4%B8%8E%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>正交变换 与图像压缩 | Welcome to my Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Welcome to my Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2019/10/24/%E6%AD%A3%E4%BA%A4%E5%8F%98%E6%8D%A2%20%E4%B8%8E%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zyx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to my Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          正交变换 与图像压缩
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-24 19:16:39" itemprop="dateCreated datePublished" datetime="2019-10-24T19:16:39+08:00">2019-10-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-08-04 18:07:26" itemprop="dateModified" datetime="2019-08-04T18:07:26+08:00">2019-08-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>正交变换 与图像压缩</p>
+<p>傅里叶变换</p>
+<ul>
+<li><p>时域连续—&gt;频域非周期</p>
+</li>
+<li><p>时域的非周期—&gt;频域连续</p>
+</li>
+</ul>
+<p>​                         </p>
+<p>图像的频率—&gt;图像中灰度变化的剧烈程度的指标。</p>
+<p>傅里叶频谱图上看到的亮点实际是图像上某一点与领域点差异的强弱，即梯度的大小。梯度大，亮度强。</p>
+<p>快速傅里叶变换（FFT)：</p>
+<ul>
+<li>蝶形算法</li>
+</ul>
+<p>码位倒序：将十进制转换成二进制，然后将二进制的序列倒序重排，再将颠倒顺序后的二进制转换成十进制。</p>
+<p>编程实现FFT：</p>
+<ul>
+<li>正变换：Y = fft2(X, m,  n):X-&gt;的输入图像;m,n—&gt;第一维到第二维规整到指定的长度；abs(Y) —&gt;幅度谱；angle(Y)—&gt;相位谱</li>
+<li>逆变换：Y = ifft2(X,m , n)</li>
+</ul>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">'C:\Users\Administrator\Desktop\lena.jpg'</span>);</span><br><span class="line">I1 = rgb2gray(I);</span><br><span class="line">fcoef = fft2(double(I1));<span class="comment">%进行快速傅里叶变换</span></span><br><span class="line"> tmp1 = <span class="built_in">log</span>(<span class="number">1</span>+<span class="built_in">abs</span>(fcoef));<span class="comment">%傅里叶变换的幅度值范围大到不合适在屏幕上显示，</span></span><br><span class="line"> <span class="comment">%为了在屏幕上凸显出高低变化的连续性，可以用对数尺度来替换线性尺度，为了确保大于0，故＋1处理</span></span><br><span class="line"> spectrum = fftshift(fcoef);<span class="comment">%将频谱图移到图像的中心</span></span><br><span class="line"> tmp2 = <span class="built_in">log</span>(<span class="number">1</span>+<span class="built_in">abs</span>(spectrum));</span><br><span class="line"> ifcoef = ifft2(fcoef);<span class="comment">%逆变换，只有对复数矩阵进行逆变换，才可以恢复原图</span></span><br><span class="line"> <span class="built_in">figure</span>                            <span class="comment">%显示处理结果</span></span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>), imshow(I1), title(<span class="string">'source image'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>), imshow(tmp1,[]), title(<span class="string">'FFT image'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>), imshow(tmp2,[]), title(<span class="string">'shift FFT image'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>), imshow(ifcoef,[]), title(<span class="string">'IFFT image'</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>离散余弦变换（DCT)</p>
+<p>：空间域的低通滤波器，在傅里叶级数展开式中，如果被展开的函数是实偶函数，则其傅里叶级数中只含有余弦项，再将其离散化，由此可导出离散余弦变换。</p>
+<p>JPEG编码：图像分解成8x8,16x16的子块，并对每一个子块进行单独的DCT变换，然后对变换结果进行量化、编码等处理。</p>
+<p>快读离散余弦变换（ANN）：</p>
+<p>缺点：对高质量图像的影响比低质量图像要大</p>
+<p>优点：极大的减少了计算量，效率可观。</p>
+<p>编程：</p>
+<p>正变换：B = dct2(A, m  ,  n,)</p>
+<p>逆变换：A = idct2(B);</p>
+<p>D = dctmtx(n);  返回一个n x n 的DCT变换矩阵；D * A就是A矩阵每一列的DCT变换值，D’*A为A的每一列的DCT反变换。</p>
+<p>dct2(A)=D<em>A</em>D’;</p>
+<p>利用DCT来进行图像压缩：</p>
+<p>分块—&gt;正变换—&gt;过滤—&gt;逆变换</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">'C:\Users\Administrator\Desktop\lena.jpg'</span>);</span><br><span class="line">I = rgb2gray(I);<span class="comment">%针对灰度图像</span></span><br><span class="line">I = im2double(I);</span><br><span class="line">T = dctmtx(<span class="number">8</span>);</span><br><span class="line">dct = @(block_struct) T * block_struct.data * T';<span class="comment">%写定对每一块的计算方法</span></span><br><span class="line">B = blockproc(I,[<span class="number">8</span> <span class="number">8</span>],dct);<span class="comment">%对I，进行【8，8】的分块处理，同时每一块执行dct的计方法</span></span><br><span class="line">mask = [<span class="number">1</span>   <span class="number">1</span>   <span class="number">1</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">1</span>   <span class="number">1</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">1</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>];</span><br><span class="line">        <span class="comment">%滤波矩阵，即只对左上角的变换后进行保留</span></span><br><span class="line">B2 = blockproc(B,[<span class="number">8</span> <span class="number">8</span>],@(block_struct) mask .* block_struct.data);</span><br><span class="line">invdct = @(block_struct) T' * block_struct.data * T;</span><br><span class="line">I2 = blockproc(B2,[<span class="number">8</span> <span class="number">8</span>],invdct);<span class="comment">%对逆变换后的I，进行逆变换，获得压缩后的原图形</span></span><br><span class="line">imshow(I), <span class="built_in">figure</span>, imshow(I2)</span><br></pre></td></tr></table></figure>
+
+<p>沃尔什-哈达玛变换—图像信息压缩</p>
+<ul>
+<li>按沃尔什排列的沃尔什函数</li>
+<li>按佩利排列的沃尔什函数</li>
+<li>按哈达玛排列的沃尔什函数</li>
+</ul>
+<p>—&gt;蝶形运算</p>
+<p>编程：</p>
+<p><code>Y = fwht(X,n,ordering);</code></p>
+<p> X：一维信号，n: Y的大小； ordering：排列顺序</p>
+<p>处理图像时，考虑<code>H = hadamard(n);</code> 返回值为输出的变换核矩阵。</p>
+<p><code>B = blockproc(A,[M,N], fun);</code></p>
+<p>将矩阵A分成【MxN】份并分别执行fun方法。</p>
+<ul>
+<li>无法控制压缩比的代码</li>
+</ul>
+<p>通过设定简单的阈值来达到滤波压缩的作用</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">'C:\Users\Administrator\Desktop\lena.jpg'</span>);</span><br><span class="line">I = rgb2gray(I);<span class="comment">%针对灰度图像</span></span><br><span class="line">I1 = double(I);</span><br><span class="line">T = <span class="built_in">hadamard</span>(<span class="number">8</span>);<span class="comment">%创建n=8的哈达玛变换核矩阵</span></span><br><span class="line">myFun1 = @(block_struct)T*block_struct.data*T/<span class="number">64</span>;<span class="comment">%块方法，注意1/（8*8）</span></span><br><span class="line">H = blockproc(I1, [<span class="number">8</span> <span class="number">8</span>], myFun1);</span><br><span class="line">H(<span class="built_in">abs</span>(H)&lt;<span class="number">3.5</span>)=<span class="number">0</span>;<span class="comment">%设定阈值，滤除系数小的分量，达到压缩的目的</span></span><br><span class="line">myFun2 = @(block_struct)T*block_struct.data*T;<span class="comment">%逆变换不用/（M*N)</span></span><br><span class="line">I2 = blockproc(H, [<span class="number">8</span> <span class="number">8</span>], myFun2);</span><br><span class="line">subplot(<span class="number">121</span>), imshow(I1,[]), title(<span class="string">'original image'</span>);</span><br><span class="line">subplot(<span class="number">122</span>), imshow(I2,[]), title(<span class="string">'zipped image'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>可以控制压缩比的代码</p>
+<p><code>B = im2col(A,[m n],block_type)；</code></p>
+<p>重排图像块为矩阵列。重排为列，</p>
+<p>A为重排的矩阵，[m,n]为指定分割的小子块矩阵的尺寸，block_type：‘distinct’：不重叠，不足以的填充0，‘sliding’：可重叠。</p>
+<p><code>[Y, ins]=sort(A,1/2)</code></p>
+<p>对于A排序，若是1—&gt;按照列升序，2—&gt;按照行升序，‘descend’：降序；Y：排序后的矩阵，ins：排序后的索引号=&gt;A = Y*ins</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">'C:\Users\Administrator\Desktop\lena.jpg'</span>);</span><br><span class="line">I = rgb2gray(I);<span class="comment">%针对灰度图像</span></span><br><span class="line">I1 = double(I);</span><br><span class="line">[m n] =<span class="built_in">size</span>(I);</span><br><span class="line">sizi = <span class="number">8</span>;</span><br><span class="line">num = <span class="number">16</span>;<span class="comment">%1-num/(8*8)：压缩比</span></span><br><span class="line"><span class="comment">%分块进行离散沃尔什变换</span></span><br><span class="line">T = <span class="built_in">hadamard</span>(sizi);</span><br><span class="line">myFun1 = @(block_struct)T*block_struct.data*T/(sizi.^<span class="number">2</span>);</span><br><span class="line">hdcoe = blockproc(I1, [sizi, sizi], myFun1);<span class="comment">%分块进行离散沃尔什变换</span></span><br><span class="line"><span class="comment">%重新排列系数</span></span><br><span class="line">coe = im2col(hdcoe,  [sizi, sizi], <span class="string">'distinct'</span>);</span><br><span class="line">coe_t = <span class="built_in">abs</span>(coe);</span><br><span class="line">[Y, ind] = <span class="built_in">sort</span>(coe_t);</span><br><span class="line"><span class="comment">%舍去绝对值较小的系数</span></span><br><span class="line">[m_c, n_c] = <span class="built_in">size</span>(coe);</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:n_c</span><br><span class="line">coe(ind(<span class="number">1</span>:num, <span class="built_in">i</span>), <span class="built_in">i</span>)=<span class="number">0</span>;<span class="comment">%按照列排序，将前16行小的系数都置为0</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">%重建图像</span></span><br><span class="line">re_hdcoe = col2im(coe, [sizi, sizi], [m, n], <span class="string">'distinct'</span>);<span class="comment">%逆变化</span></span><br><span class="line">myFun2 = @(block_struct)T*block_struct.data*T;</span><br><span class="line">re_s = blockproc(re_hdcoe, [sizi, sizi], myFun2);</span><br><span class="line">subplot(<span class="number">121</span>), imshow(I1,[]), title(<span class="string">'original image'</span>);</span><br><span class="line">subplot(<span class="number">122</span>), imshow(re_s,[]), title(<span class="string">'compressed image'</span>);<span class="comment">%压缩比例为75%</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>卡洛南-洛伊变换（K-L变换）</p>
+<p>将在原本的坐标中相关的数据，通过转换到新的坐标系中，使得数据不相关。</p>
+<ul>
+<li>相关函数</li>
+</ul>
+<p><code>[coeff,score,latent,tsquare]  =  princomp(X)</code></p>
+<p>X：输入矩阵 ( nxp)，coeff：对输入矩阵做主成分变换后返回的主成分系数（p x p); score：在新的坐标系中的数据，</p>
+<p><code>B =reshape(A, m , n)</code></p>
+<p>将A矩阵中的元素按照列读取，然后重组成mxn的矩阵。</p>
+<p>图像压缩：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">'C:\Users\Administrator\Desktop\lena.jpg'</span>);</span><br><span class="line">I = rgb2gray(I);<span class="comment">%针对灰度图像</span></span><br><span class="line">x = double(I)/<span class="number">255</span>;</span><br><span class="line">[m,n]=<span class="built_in">size</span>(x);</span><br><span class="line">y =[];</span><br><span class="line"><span class="comment">%拆解图像</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m/<span class="number">8</span>;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:n/<span class="number">8</span>;</span><br><span class="line">        ii = (<span class="built_in">i</span><span class="number">-1</span>)*<span class="number">8</span>+<span class="number">1</span>;</span><br><span class="line">        jj = (<span class="built_in">j</span><span class="number">-1</span>)*<span class="number">8</span>+<span class="number">1</span>;</span><br><span class="line">        y_app = <span class="built_in">reshape</span>(x(ii:ii+<span class="number">7</span>,jj:jj+<span class="number">7</span>),<span class="number">1</span>,<span class="number">64</span>);</span><br><span class="line">        y=[y;y_app];</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">%将图像的每一个小块分解成64列的一维数组</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%KL变换</span></span><br><span class="line">[COEFF,SCORE,latent] = pca(y);</span><br><span class="line">kl = y * COEFF;</span><br><span class="line"></span><br><span class="line">kl1 = kl;</span><br><span class="line">kl2 = kl;</span><br><span class="line">kl3 = kl;<span class="comment">%矩阵按照从大到小顺序排列</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%置零压缩过程</span></span><br><span class="line">kl1(:, <span class="number">33</span>:<span class="number">64</span>)=<span class="number">0</span>;</span><br><span class="line">kl2(:, <span class="number">17</span>:<span class="number">64</span>)=<span class="number">0</span>;</span><br><span class="line">kl3(:, <span class="number">9</span>:<span class="number">64</span>)=<span class="number">0</span>;<span class="comment">%将9-64列的像素都置零，实现压缩的方法。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%KL逆变换</span></span><br><span class="line">kl_i = kl*COEFF';</span><br><span class="line">kl1_i = kl1*COEFF';</span><br><span class="line">kl2_i = kl2*COEFF';</span><br><span class="line">kl3_i = kl3*COEFF';</span><br><span class="line"></span><br><span class="line">image = <span class="built_in">ones</span>(<span class="number">256</span>,<span class="number">256</span>);</span><br><span class="line">image1 = <span class="built_in">ones</span>(<span class="number">256</span>,<span class="number">256</span>);</span><br><span class="line">image2 = <span class="built_in">ones</span>(<span class="number">256</span>,<span class="number">256</span>);</span><br><span class="line">image3 = <span class="built_in">ones</span>(<span class="number">256</span>,<span class="number">256</span>);</span><br><span class="line"></span><br><span class="line">k=<span class="number">1</span>;</span><br><span class="line"><span class="comment">%重组图像</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m/<span class="number">8</span>;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:n/<span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">        y = <span class="built_in">reshape</span>(kl_i(k, <span class="number">1</span>:<span class="number">64</span>),<span class="number">8</span>,<span class="number">8</span>);</span><br><span class="line">        y1 = <span class="built_in">reshape</span>(kl1_i(k, <span class="number">1</span>:<span class="number">64</span>),<span class="number">8</span>,<span class="number">8</span>);</span><br><span class="line">        y2 = <span class="built_in">reshape</span>(kl2_i(k, <span class="number">1</span>:<span class="number">64</span>),<span class="number">8</span>,<span class="number">8</span>);</span><br><span class="line">        y3 = <span class="built_in">reshape</span>(kl3_i(k, <span class="number">1</span>:<span class="number">64</span>),<span class="number">8</span>,<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">        ii = (<span class="built_in">i</span><span class="number">-1</span>)*<span class="number">8</span>+<span class="number">1</span>;</span><br><span class="line">        jj = (<span class="built_in">j</span><span class="number">-1</span>)*<span class="number">8</span>+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        image(ii:ii+<span class="number">7</span>,jj:jj+<span class="number">7</span>) = y;</span><br><span class="line">        image1(ii:ii+<span class="number">7</span>,jj:jj+<span class="number">7</span>) = y1;</span><br><span class="line">        image2(ii:ii+<span class="number">7</span>,jj:jj+<span class="number">7</span>) = y2;</span><br><span class="line">        image3(ii:ii+<span class="number">7</span>,jj:jj+<span class="number">7</span>) = y3;</span><br><span class="line"></span><br><span class="line">        k=k+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">figure</span></span><br><span class="line">subplot(<span class="number">221</span>);imshow(image);</span><br><span class="line">subplot(<span class="number">222</span>);imshow(image1);</span><br><span class="line">subplot(<span class="number">223</span>);imshow(image2);</span><br><span class="line">subplot(<span class="number">224</span>);imshow(image3);</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/24/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2/" rel="next" title="图像分割">
+      图像分割 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zyx</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zyx</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
