@@ -160,6 +160,1049 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2020/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zyx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to my Blog-Zzzzzz">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">计算机网络</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-13 09:19:58" itemprop="dateCreated datePublished" datetime="2020-05-13T09:19:58+08:00">2020-05-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>相对与上一个版本的计算机网路面试知识总结，这个版本增加了 “TCP协议如何保证可靠传输”包括超时重传、停止等待协议、滑动窗口、流量控制、拥塞控制等内容并且对一些已有内容做了补充。</p>
+<p><strong>一</strong> <strong>OSI**</strong>与<strong><strong>TCP/IP</strong></strong>各层的结构与功能<strong><strong>,</strong></strong>都有哪些协议**</p>
+<p><strong>五层协议的体系结构</strong></p>
+<p>学习计算机网络时我们一般采用折中的办法，也就是中和 OSI 和 TCP/IP 的优点，采用一种只有五层协议的体系结构，这样既简洁又能将概念阐述清楚。</p>
+<p><img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image001.png" alt="五层协议的体系结构"></p>
+<p>结合互联网的情况，自上而下地，非常简要的介绍一下各层的作用。</p>
+<p><strong>1</strong> <strong>应用层</strong></p>
+<p><strong>应用层**</strong>(application-layer<strong><strong>）的任务是通过应用进程间的交互来完成特定网络应用。应用层协议定义的是应用进程（进程：主机中正在运行的程序）间的通信和交互的规则。对于不同的网络应用需要不同的应用层协议。在互联网中应用层协议很多，如域名系统</strong></strong>DNS<strong>，支持万维网应用的 <strong>HTTP</strong></strong>协议<strong>，支持电子邮件的 <strong>SMTP</strong></strong>协议**等等。我们把应用层交互的数据单元称为报文。</p>
+<p><strong>域名系统</strong></p>
+<p>域名系统(Domain Name System缩写 DNS，Domain Name被译为域名)是因特网的一项核心服务，它作为可以将域名和IP地址相互映射的一个分布式数据库，能够使人更方便的访问互联网，而不用去记住能够被机器直接读取的IP数串。（百度百科）例如：一个公司的 Web 网站可看作是它在网上的门户，而域名就相当于其门牌地址，通常域名都使用该公司的名称或简称。例如上面提到的微软公司的域名，类似的还有：IBM 公司的域名是 <a href="http://www.ibm.com、Oracle" target="_blank" rel="noopener">www.ibm.com、Oracle</a> 公司的域名是 <a href="http://www.oracle.com、Cisco公司的域名是" target="_blank" rel="noopener">www.oracle.com、Cisco公司的域名是</a> <a href="http://www.cisco.com" target="_blank" rel="noopener">www.cisco.com</a> 等。</p>
+<p><strong>HTTP**</strong>协议**</p>
+<p>超文本传输协议（HTTP，HyperText Transfer Protocol)是互联网上应用最为广泛的一种网络协议。所有的 WWW（万维网） 文件都必须遵守这个标准。设计 HTTP 最初的目的是为了提供一种发布和接收 HTML 页面的方法。（百度百科）</p>
+<p><strong>2</strong> <strong>运输层</strong></p>
+<p><strong>运输层**</strong>(transport layer)<strong>**的主要任务就是负责向两台主机进程之间的通信提供通用的数据传输服务</strong>。应用进程利用该服务传送应用层报文。“通用的”是指并不针对某一个特定的网络应用，而是多种应用可以使用同一个运输层服务。由于一台主机可同时运行多个线程，因此运输层有复用和分用的功能。所谓复用就是指多个应用层进程可同时使用下面运输层的服务，分用和复用相反，是运输层把收到的信息分别交付上面应用层中的相应进程。</p>
+<p><strong>运输层主要使用以下两种协议</strong></p>
+<ol>
+<li><strong>传输控制协议</strong> <strong>TCP</strong>（Transmisson Control Protocol）–提供<strong>面向连接</strong>的，<strong>可靠的</strong>数据传输服务。</li>
+<li><strong>用户数据协议</strong> <strong>UDP</strong>（User Datagram Protocol）–提供<strong>无连接</strong>的，尽最大努力的数据传输服务（<strong>不保证数据传输的可靠性</strong>）。</li>
+</ol>
+<p><strong>UDP</strong> <strong>的主要特点</strong></p>
+<ol>
+<li>UDP 是无连接的；</li>
+<li>UDP 使用尽最大努力交付，即不保证可靠交付，因此主机不需要维持复杂的链接状态（这里面有许多参数）；</li>
+<li>UDP 是面向报文的；</li>
+<li>UDP 没有拥塞控制，因此网络出现拥塞不会使源主机的发送速率降低（对实时应用很有用，如 直播，实时视频会议等）；</li>
+<li>UDP 支持一对一、一对多、多对一和多对多的交互通信；</li>
+<li>UDP 的首部开销小，只有8个字节，比TCP的20个字节的首部要短。</li>
+</ol>
+<p><strong>TCP</strong> <strong>的主要特点</strong></p>
+<ol>
+<li>TCP 是面向连接的。（就好像打电话一样，通话前需要先拨号建立连接，通话结束后要挂机释放连接）；</li>
+<li>每一条 TCP 连接只能有两个端点，每一条TCP连接只能是点对点的（一对一）；</li>
+<li>TCP 提供可靠交付的服务。通过TCP连接传送的数据，无差错、不丢失、不重复、并且按序到达；</li>
+<li>TCP 提供全双工通信。TCP 允许通信双方的应用进程在任何时候都能发送数据。TCP 连接的两端都设有发送缓存和接收缓存，用来临时存放双方通信的数据；</li>
+<li>面向字节流。TCP 中的“流”（Stream）指的是流入进程或从进程流出的字节序列。“面向字节流”的含义是：虽然应用程序和 TCP 的交互是一次一个数据块（大小不等），但 TCP 把应用程序交下来的数据仅仅看成是一连串的无结构的字节流。</li>
+</ol>
+<p><strong>3</strong> <strong>网络层</strong></p>
+<p><strong>在</strong> <strong>计算机网络中进行通信的两个计算机之间可能会经过很多个数据链路，也可能还要经过很多通信子网。网络层的任务就是选择合适的网间路由和交换结点，</strong> <strong>确保数据及时传送。</strong> 在发送数据时，网络层把运输层产生的报文段或用户数据报封装成分组和包进行传送。在 TCP/IP 体系结构中，由于网络层使用 <strong>IP</strong> <strong>协议</strong>，因此分组也叫 <strong>IP</strong> <strong>数据报</strong> ，简称 <strong>数据报</strong>。</p>
+<p>这里要注意：<strong>不要把运输层的**</strong>“<strong>**用户数据报</strong> <strong>UDP ”**</strong>和网络层的<strong>**“ IP</strong> <strong>数据报**</strong>”<strong>**弄混</strong>。另外，无论是哪一层的数据单元，都可笼统地用“分组”来表示。</p>
+<p>这里强调指出，网络层中的“网络”二字已经不是我们通常谈到的具体网络，而是指计算机网络体系结构模型中第三层的名称.</p>
+<p>互联网是由大量的异构（heterogeneous）网络通过路由器（router）相互连接起来的。互联网使用的网络层协议是无连接的网际协议（Intert Prococol）和许多路由选择协议，因此互联网的网络层也叫做<strong>网际层</strong>或<strong>IP**</strong>层**。</p>
+<p><strong>4</strong> <strong>数据链路层</strong></p>
+<p><strong>数据链路层**</strong>(data link layer)<strong>**通常简称为链路层。两台主机之间的数据传输，总是在一段一段的链路上传送的，这就需要使用专门的链路层的协议。</strong> 在两个相邻节点之间传送数据时，<strong>数据链路层将网络层交下来的</strong> <strong>IP</strong> <strong>数据报组装程帧</strong>，在两个相邻节点间的链路上传送帧。每一帧包括数据和必要的控制信息（如同步信息，地址信息，差错控制等）。</p>
+<p>在接收数据时，控制信息使接收端能够知道一个帧从哪个比特开始和到哪个比特结束。这样，数据链路层在收到一个帧后，就可从中提出数据部分，上交给网络层。<br> 控制信息还使接收端能够检测到所收到的帧中有误差错。如果发现差错，数据链路层就简单地丢弃这个出了差错的帧，以避免继续在网络中传送下去白白浪费网络资源。如果需要改正数据在链路层传输时出现差错（这就是说，数据链路层不仅要检错，而且还要纠错），那么就要采用可靠性传输协议来纠正出现的差错。这种方法会使链路层的协议复杂些。</p>
+<p><strong>5</strong> <strong>物理层</strong></p>
+<p>在物理层上所传送的数据单位是比特。<br> <strong>物理层**</strong>(physical layer)<strong>**的作用是实现相邻计算机节点之间比特流的透明传送，尽可能屏蔽掉具体传输介质和物理设备的差异。</strong> 使其上面的数据链路层不必考虑网络的具体传输介质是什么。“透明传送比特流”表示经实际电路传送后的比特流没有发生变化，对传送的比特流来说，这个电路好像是看不见的。</p>
+<p>在互联网使用的各种协中最重要和最著名的就是 TCP/IP 两个协议。现在人们经常提到的TCP/IP并不一定单指TCP和IP这两个具体的协议，而往往表示互联网所使用的整个TCP/IP协议族。</p>
+<p><strong>总结一下</strong></p>
+<p>上面我们对计算机网络的五层体系结构有了初步的了解，下面附送一张七层体系结构图总结一下。图片来源：<a href="https://blog.csdn.net/yaopeng_2005/article/details/7064869" target="_blank" rel="noopener">https://blog.csdn.net/yaopeng_2005/article/details/7064869</a><br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image003.jpg" alt="七层体系结构图"></p>
+<p><strong>二</strong> <strong>TCP</strong> <strong>三次握手和四次挥手**</strong>(<strong><strong>面试常客</strong></strong>)**</p>
+<p>为了准确无误地把数据送达目标处，TCP协议采用了三次握手策略。</p>
+<p><strong>漫画图解：</strong></p>
+<p>图片来源：《图解HTTP》<br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image005.png" alt="TCP三次握手"></p>
+<p><strong>简单示意图：</strong><br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image006.jpg" alt="TCP三次握手"></p>
+<p>·    客户端–发送带有 SYN 标志的数据包–一次握手–服务端</p>
+<p>·    服务端–发送带有 SYN/ACK 标志的数据包–二次握手–客户端</p>
+<p>·    客户端–发送带有带有 ACK 标志的数据包–三次握手–服务端</p>
+<p><strong>为什么要三次握手</strong></p>
+<p><strong>三次握手的目的是建立可靠的通信信道，说到通讯，简单来说就是数据的发送与接收，而三次握手最主要的目的就是双方确认自己与对方的发送与接收是正常的。</strong></p>
+<p>第一次握手：Client 什么都不能确认；Server 确认了对方发送正常</p>
+<p>第二次握手：Client 确认了：自己发送、接收正常，对方发送、接收正常；Server 确认了：自己接收正常，对方发送正常</p>
+<p>第三次握手：Client 确认了：自己发送、接收正常，对方发送、接收正常；Server 确认了：自己发送、接收正常，对方发送接收正常</p>
+<p>所以三次握手就能确认双发收发功能都正常，缺一不可。</p>
+<p><strong>为什么要传回</strong> <strong>SYN</strong></p>
+<p>接收端传回发送端所发送的 SYN 是为了告诉发送端，我接收到的信息确实就是你所发送的信号了。</p>
+<p>SYN 是 TCP/IP 建立连接时使用的握手信号。在客户机和服务器之间建立正常的 TCP 网络连接时，客户机首先发出一个 SYN 消息，服务器使用 SYN-ACK 应答表示接收到了这个消息，最后客户机再以 ACK(Acknowledgement[汉译：确认字符 ,在数据通信传输中，接收站发给发送站的一种传输控制字符。它表示确认发来的数据已经接受无误。 ]）消息响应。这样在客户机和服务器之间才能建立起可靠的TCP连接，数据才可以在客户机和服务器之间传递。</p>
+<p><strong>传了</strong> <strong>SYN,**</strong>为啥还要传** <strong>ACK</strong></p>
+<p>双方通信无误必须是两者互相发送信息都无误。传了 SYN，证明发送方到接收方的通道没有问题，但是接收方到发送方的通道还需要 ACK 信号来进行验证。</p>
+<p><img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image007.jpg" alt="TCP四次挥手"></p>
+<p>断开一个 TCP 连接则需要“四次挥手”：</p>
+<p>·    客户端-发送一个 FIN，用来关闭客户端到服务器的数据传送</p>
+<p>·    服务器-收到这个 FIN，它发回一 个 ACK，确认序号为收到的序号加1 。和 SYN 一样，一个 FIN 将占用一个序号</p>
+<p>·    服务器-关闭与客户端的连接，发送一个FIN给客户端</p>
+<p>·    客户端-发回 ACK 报文确认，并将确认序号设置为收到序号加1</p>
+<p><strong>为什么要四次挥手</strong></p>
+<p>任何一方都可以在数据传送结束后发出连接释放的通知，待对方确认后进入半关闭状态。当另一方也没有数据再发送的时候，则发出连接释放通知，对方确认后就完全关闭了TCP连接。</p>
+<p>举个例子：A 和 B 打电话，通话即将结束后，A 说“我没啥要说的了”，B回答“我知道了”，但是 B 可能还会有要说的话，A 不能要求 B 跟着自己的节奏结束通话，于是 B 可能又巴拉巴拉说了一通，最后 B 说“我说完了”，A 回答“知道了”，这样通话才算结束。</p>
+<p>上面讲的比较概括，推荐一篇讲的比较细致的文章：<a href="https://blog.csdn.net/qzcsu/article/details/72861891" target="_blank" rel="noopener">https://blog.csdn.net/qzcsu/article/details/72861891</a></p>
+<p><strong>三</strong> <strong>TCP**</strong>、<strong>**UDP</strong> <strong>协议的区别</strong></p>
+<p><img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image009.png" alt="TCP、UDP协议的区别"></p>
+<p>UDP 在传送数据之前不需要先建立连接，远地主机在收到 UDP 报文后，不需要给出任何确认。虽然 UDP 不提供可靠交付，但在某些情况下 UDP 确是一种最有效的工作方式（一般用于即时通信），比如： QQ 语音、 QQ 视频 、直播等等</p>
+<p>TCP 提供面向连接的服务。在传送数据之前必须先建立连接，数据传送结束后要释放连接。 TCP 不提供广播或多播服务。由于 TCP 要提供可靠的，面向连接的运输服务（TCP的可靠体现在TCP在传递数据之前，会有三次握手来建立连接，而且在数据传递时，有确认、窗口、重传、拥塞控制机制，在数据传完后，还会断开连接用来节约系统资源），这一难以避免增加了许多开销，如确认，流量控制，计时器以及连接管理等。这不仅使协议数据单元的首部增大很多，还要占用许多处理机资源。TCP 一般用于文件传输、发送和接收邮件、远程登录等场景。</p>
+<p><strong>四</strong> <strong>TCP</strong> <strong>协议如何保证可靠传输</strong></p>
+<ol>
+<li>应用数据被分割成 TCP 认为最适合发送的数据块。</li>
+<li>TCP 给发送的每一个包进行编号，接收方对数据包进行排序，把有序数据传送给应用层。</li>
+<li><strong>校验和：</strong> TCP 将保持它首部和数据的检验和。这是一个端到端的检验和，目的是检测数据在传输过程中的任何变化。如果收到段的检验和有差错，TCP 将丢弃这个报文段和不确认收到此报文段。</li>
+<li>TCP 的接收端会丢弃重复的数据。</li>
+<li><strong>流量控制：</strong> TCP 连接的每一方都有固定大小的缓冲空间，TCP的接收端只允许发送端发送接收端缓冲区能接纳的数据。当接收方来不及处理发送方的数据，能提示发送方降低发送的速率，防止包丢失。TCP 使用的流量控制协议是可变大小的滑动窗口协议。 （TCP 利用滑动窗口实现流量控制）</li>
+<li><strong>拥塞控制：</strong> 当网络拥塞时，减少数据的发送。</li>
+<li><strong>停止等待协议</strong> 也是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认。在收到确认后再发下一个分组。 <strong>超时重传：</strong> 当 TCP 发出一个段后，它启动一个定时器，等待目的端确认收到这个报文段。如果不能及时收到一个确认，将重发这个报文段。</li>
+</ol>
+<p><strong>停止等待协议</strong></p>
+<p>·    停止等待协议是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认。在收到确认后再发下一个分组；</p>
+<p>·    在停止等待协议中，若接收方收到重复分组，就丢弃该分组，但同时还要发送确认；</p>
+<p><strong>1)</strong> <strong>无差错情况**</strong>:**</p>
+<p><img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image010.png" alt="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAxOC84LzE2LzE2NTQxZmE4YzM4MTZhOTA?x-oss-process=image/format,png"></p>
+<p>发送方发送分组,接收方在规定时间内收到,并且回复确认.发送方再次发送。</p>
+<p><strong>2)</strong> <strong>出现差错情况（超时重传）**</strong>:**<br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image012.png" alt="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAxOC84LzE2LzE2NTQxZmFlZmRmMjQ5YWI?x-oss-process=image/format,png"><br> 停止等待协议中超时重传是指只要超过一段时间仍然没有收到确认，就重传前面发送过的分组（认为刚才发送过的分组丢失了）。因此每发送完一个分组需要设置一个超时计时器，其重转时间应比数据在分组传输的平均往返时间更长一些。这种自动重传方式常称为 <strong>自动重传请求</strong> <strong>ARQ</strong> 。另外在停止等待协议中若收到重复分组，就丢弃该分组，但同时还要发送确认。<strong>连续</strong> <strong>ARQ</strong> <strong>协议</strong> 可提高信道利用率。发送维持一个发送窗口，凡位于发送窗口内的分组可连续发送出去，而不需要等待对方确认。接收方一般采用累积确认，对按序到达的最后一个分组发送确认，表明到这个分组位置的所有分组都已经正确收到了。</p>
+<p><strong>3)</strong> <strong>确认丢失和确认迟到</strong></p>
+<p>·    <strong>确认丢失</strong>：确认消息在传输过程丢失<br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image014.png" alt="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAxOC84LzE2LzE2NTQxZmI2OTQxYTcxNjU?x-oss-process=image/format,png"><br> 当A发送M1消息，B收到后，B向A发送了一个M1确认消息，但却在传输过程中丢失。而A并不知道，在超时计时过后，A重传M1消息，B再次收到该消息后采取以下两点措施：</p>
+<p>\1.   丢弃这个重复的M1消息，不向上层交付。</p>
+<p>\2.   向A发送确认消息。（不会认为已经发送过了，就不再发送。A能重传，就证明B的确认消息丢失）。</p>
+<p>·    <strong>确认迟到</strong> ：确认消息在传输过程中迟到<br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image016.png" alt="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAxOC84LzE2LzE2NTQxZmRkODU5MjllNmI?x-oss-process=image/format,png"><br> A发送M1消息，B收到并发送确认。在超时时间内没有收到确认消息，A重传M1消息，B仍然收到并继续发送确认消息（B收到了2份M1）。此时A收到了B第二次发送的确认消息。接着发送其他数据。过了一会，A收到了B第一次发送的对M1的确认消息（A也收到了2份确认消息）。处理如下：</p>
+<p>\1.   A收到重复的确认后，直接丢弃。</p>
+<p>\2.   B收到重复的M1后，也直接丢弃重复的M1。</p>
+<p><strong>自动重传请求</strong> <strong>ARQ</strong> <strong>协议</strong></p>
+<p>停止等待协议中超时重传是指只要超过一段时间仍然没有收到确认，就重传前面发送过的分组（认为刚才发送过的分组丢失了）。因此每发送完一个分组需要设置一个超时计时器，其重转时间应比数据在分组传输的平均往返时间更长一些。这种自动重传方式常称为自动重传请求ARQ。</p>
+<p><strong>优点：</strong> 简单</p>
+<p><strong>缺点：</strong> 信道利用率低</p>
+<p><strong>连续**</strong>ARQ<strong>**协议</strong></p>
+<p>连续 ARQ 协议可提高信道利用率。发送方维持一个发送窗口，凡位于发送窗口内的分组可以连续发送出去，而不需要等待对方确认。接收方一般采用累计确认，对按序到达的最后一个分组发送确认，表明到这个分组为止的所有分组都已经正确收到了。</p>
+<p><strong>优点：</strong> 信道利用率高，容易实现，即使确认丢失，也不必重传。</p>
+<p><strong>缺点：</strong> 不能向发送方反映出接收方已经正确收到的所有分组的信息。 比如：发送方发送了 5条 消息，中间第三条丢失（3号），这时接收方只能对前两个发送确认。发送方无法知道后三个分组的下落，而只好把后三个全部重传一次。这也叫 Go-Back-N（回退 N），表示需要退回来重传已经发送过的 N 个消息。</p>
+<p><strong>滑动窗口</strong></p>
+<p>·    TCP 利用滑动窗口实现流量控制的机制。</p>
+<p>·    滑动窗口（Sliding window）是一种流量控制技术。早期的网络通信中，通信双方不会考虑网络的拥挤情况直接发送数据。由于大家不知道网络拥塞状况，同时发送数据，导致中间节点阻塞掉包，谁也发不了数据，所以就有了滑动窗口机制来解决此问题。</p>
+<p>·    TCP 中采用滑动窗口来进行传输控制，滑动窗口的大小意味着接收方还有多大的缓冲区可以用于接收数据。发送方可以通过滑动窗口的大小来确定应该发送多少字节的数据。当滑动窗口为 0 时，发送方一般不能再发送数据报，但有两种情况除外，一种情况是可以发送紧急数据，例如，允许用户终止在远端机上的运行进程。另一种情况是发送方可以发送一个 1 字节的数据报来通知接收方重新声明它希望接收的下一字节及发送方的滑动窗口大小。</p>
+<p><strong>流量控制</strong></p>
+<p>·    TCP 利用滑动窗口实现流量控制。</p>
+<p>·    流量控制是为了控制发送方发送速率，保证接收方来得及接收。</p>
+<p>·    接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送速率。将窗口字段设置为 0，则发送方不能发送数据。</p>
+<p><strong>拥塞控制</strong></p>
+<p>在某段时间，若对网络中某一资源的需求超过了该资源所能提供的可用部分，网络的性能就要变坏。这种情况就叫拥塞。拥塞控制就是为了防止过多的数据注入到网络中，这样就可以使网络中的路由器或链路不致过载。拥塞控制所要做的都有一个前提，就是网络能够承受现有的网络负荷。拥塞控制是一个全局性的过程，涉及到所有的主机，所有的路由器，以及与降低网络传输性能有关的所有因素。相反，流量控制往往是点对点通信量的控制，是个端到端的问题。流量控制所要做到的就是抑制发送端发送数据的速率，以便使接收端来得及接收。</p>
+<p>为了进行拥塞控制，TCP 发送方要维持一个 <strong>拥塞窗口**</strong>(cwnd)** 的状态变量。拥塞控制窗口的大小取决于网络的拥塞程度，并且动态变化。发送方让自己的发送窗口取为拥塞窗口和接收方的接受窗口中较小的一个。</p>
+<p>TCP的拥塞控制采用了四种算法，即 <strong>慢开始</strong> 、 <strong>拥塞避免</strong> 、<strong>快重传</strong> 和 <strong>快恢复</strong>。在网络层也可以使路由器采用适当的分组丢弃策略（如主动队列管理 AQM），以减少网络拥塞的发生。</p>
+<p>·    <strong>慢开始：</strong> 慢开始算法的思路是当主机开始发送数据时，如果立即把大量数据字节注入到网络，那么可能会引起网络阻塞，因为现在还不知道网络的符合情况。经验表明，较好的方法是先探测一下，即由小到大逐渐增大发送窗口，也就是由小到大逐渐增大拥塞窗口数值。cwnd初始值为1，每经过一个传播轮次，cwnd加倍。<br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image018.jpg" alt="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAxOC84LzEwLzE2NTIzNDhhZGEyYzhmZDA?x-oss-process=image/format,png"></p>
+<p>·    <strong>拥塞避免：</strong> 拥塞避免算法的思路是让拥塞窗口cwnd缓慢增大，即每经过一个往返时间RTT就把发送放的cwnd加1.</p>
+<p>·    <strong>快重传与快恢复：</strong><br> 在 TCP/IP 中，快速重传和恢复（fast retransmit and recovery，FRR）是一种拥塞控制算法，它能快速恢复丢失的数据包。没有 FRR，如果数据包丢失了，TCP 将会使用定时器来要求传输暂停。在暂停的这段时间内，没有新的或复制的数据包被发送。有了 FRR，如果接收机接收到一个不按顺序的数据段，它会立即给发送机发送一个重复确认。如果发送机接收到三个重复确认，它会假定确认件指出的数据段丢失了，并立即重传这些丢失的数据段。有了 FRR，就不会因为重传时要求的暂停被耽误。 　当有单独的数据包丢失时，快速重传和恢复（FRR）能最有效地工作。当有多个数据信息包在某一段很短的时间内丢失时，它则不能很有效地工作。<br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image020.png" alt="快重传与快恢复"></p>
+<p><strong>五</strong> <strong>在浏览器中输入**</strong>url<strong>**地址</strong> <strong>-&gt;&gt;</strong> <strong>显示主页的过程（面试常客）</strong></p>
+<p>百度好像最喜欢问这个问题。</p>
+<p>打开一个网页，整个过程会使用哪些协议</p>
+<p>图解（图片来源：《图解HTTP》）：</p>
+<p><img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image021.png" alt="状态码"></p>
+<p>总体来说分为以下几个过程:</p>
+<ol>
+<li>DNS解析</li>
+<li>TCP连接</li>
+<li>发送HTTP请求</li>
+<li>服务器处理请求并返回HTTP报文</li>
+<li>浏览器解析渲染页面</li>
+<li>连接结束</li>
+</ol>
+<p>具体可以参考下面这篇文章：</p>
+<p>·    <a href="https://segmentfault.com/a/1190000006879700" target="_blank" rel="noopener">https://segmentfault.com/a/1190000006879700</a></p>
+<p><strong>六</strong> <strong>状态码</strong></p>
+<p><img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image022.png" alt="状态码"></p>
+<p><strong>七</strong> <strong>各种协议与**</strong>HTTP<strong>**协议之间的关系</strong></p>
+<p>一般面试官会通过这样的问题来考察你对计算机网络知识体系的理解。</p>
+<p>图片来源：《图解HTTP》</p>
+<p><img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image024.png" alt="各种协议与HTTP协议之间的关系"></p>
+<p><strong>八</strong> <strong>HTTP**</strong>长连接、短连接**</p>
+<p>在HTTP/1.0中默认使用短连接。也就是说，客户端和服务器每进行一次HTTP操作，就建立一次连接，任务结束就中断连接。当客户端浏览器访问的某个HTML或其他类型的Web页中包含有其他的Web资源（如JavaScript文件、图像文件、CSS文件等），每遇到这样一个Web资源，浏览器就会重新建立一个HTTP会话。</p>
+<p>而从HTTP/1.1起，默认使用长连接，用以保持连接特性。使用长连接的HTTP协议，会在响应头加入这行代码：</p>
+<p>Connection:keep-alive</p>
+<p>·    1</p>
+<p>在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，客户端再次访问这个服务器时，会继续使用这一条已经建立的连接。Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。实现长连接需要客户端和服务端都支持长连接。</p>
+<p><strong>HTTP**</strong>协议的长连接和短连接，实质上是<strong><strong>TCP</strong></strong>协议的长连接和短连接。**</p>
+<p>—— <a href="https://www.cnblogs.com/gotodsp/p/6366163.html" target="_blank" rel="noopener">《HTTP长连接、短连接究竟是什么？》</a></p>
+<p><strong>写在最后</strong></p>
+<p><strong>计算机网络常见问题回顾</strong></p>
+<p>·    ①TCP三次握手和四次挥手、</p>
+<p>·    ②在浏览器中输入url地址-&gt;&gt;显示主页的过程</p>
+<p>·    ③HTTP和HTTPS的区别</p>
+<p>·    ④TCP、UDP协议的区别</p>
+<p>·    ⑤常见的状态码。</p>
+<p><strong>建议</strong></p>
+<p>非常推荐大家看一下 《图解HTTP》 这本书，这本书页数不多，但是内容很是充实，不管是用来系统的掌握网络方面的一些知识还是说纯粹为了应付面试都有很大帮助。下面的一些文章只是参考。大二学习这门课程的时候，我们使用的教材是 《计算机网络第七版》（谢希仁编著），不推荐大家看这本教材，书非常厚而且知识偏理论，不确定大家能不能心平气和的读完。</p>
+<p><strong>一、**</strong>OSI<strong><strong>，</strong></strong>TCP/IP<strong>**，五层协议的体系结构，以及各层协议</strong></p>
+<p><strong>OSI**</strong>分层** <strong>（**</strong>7<strong>**层）：</strong>物理层、数据链路层、网络层、传输层、会话层、表示层、应用层。<br> <strong>TCP/IP**</strong>分层（<strong><strong>4</strong></strong>层）：<strong>网络接口层、 网际层、运输层、 应用层。<br> **五层协议</strong> <strong>（**</strong>5<strong>**层）：</strong>物理层、数据链路层、网络层、运输层、 应用层。</p>
+<p><strong>每一层的协议如下：</strong></p>
+<p>物理层：RJ45、CLOCK、IEEE802.3 （中继器，集线器，网关）<br> 数据链路：PPP、FR、HDLC、VLAN、MAC （网桥，交换机）<br> 网络层：IP、ICMP、ARP、RARP、OSPF、IPX、RIP、IGRP、 （路由器）<br> 传输层：TCP、UDP、SPX<br> 会话层：NFS、SQL、NETBIOS、RPC<br> 表示层：JPEG、MPEG、ASII<br> 应用层：FTP、DNS、Telnet、SMTP、HTTP、WWW、NFS</p>
+<p><strong>HTTP**</strong>的长连接和短连接<strong>**?</strong></p>
+<p>HTTP的长连接和短连接本质上是<strong>TCP**</strong>长连接和短连接**。HTTP属于应用层协议.</p>
+<p><em>短连接<strong>:</strong>浏览器和服务器每进行一次<strong>HTTP</strong>操作，就建立一次连接，但任务结束就中断连接。</em></p>
+<p><strong>长连接**</strong>:**当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的 TCP连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。实现长连接要客户端和服务端都支持长连接。</p>
+<p>TCP短连接: client向server发起连接请求，server接到请求，然后双方建立连接。client向server发送消息，server回应client，然后一次读写就完成了，这时候双方任何一个都可以发起close操作，不过一般都是client先发起 close操作.短连接一般只会在 client/server间传递一次读写操作</p>
+<p>TCP长连接: client向server发起连接，server接受client连接，双方建立连接。Client与server完成一次读写之后，它们之间的连接并不会主动关闭，后续的读写操作会继续使用这个连接。</p>
+<p><strong>每一层的作用如下：</strong></p>
+<p>物理层：通过媒介传输比特,确定机械及电气规范（比特Bit）<br> 数据链路层：将比特组装成帧和点到点的传递（帧Frame）<br> 网络层：负责数据包从源到宿的传递和网际互连（包PackeT）<br> 传输层：提供端到端的可靠报文传递和错误恢复（段Segment）<br> 会话层：建立、管理和终止会话（会话协议数据单元SPDU）<br> 表示层：对数据进行翻译、加密和压缩（表示协议数据单元PPDU）<br> 应用层：允许访问OSI环境的手段（应用协议数据单元APDU）</p>
+<p><strong>运输层协议与网络层协议的区别？</strong></p>
+<p>网络层协议负责的是提供主机间的逻辑通信<br> 运输层协议负责的是提供进程间的逻辑通信</p>
+<p><strong>数据链路层协议可能提供的服务？</strong></p>
+<p>成帧、链路访问、透明传输、可靠交付、流量控制、差错检测、差错纠正、半双工和全双工。最重要的是帧定界（成帧）、透明传输以及差错检测。</p>
+<p><strong>二、**</strong>IP<strong>**地址的分类</strong></p>
+<p>A类地址：以0开头， 第一个字节范围：0~127（1.0.0.1 - 126.255.255.254）；</p>
+<p>B类地址：以10开头， 第一个字节范围：128~191（128.0.0.1 - 191.255.255.254）；</p>
+<p>C类地址：以110开头， 第一个字节范围：192~223（192.0.0.1- 223.255.255.254）；</p>
+<p>10.0.0.0—10.255.255.255， 172.16.0.0—172.31.255.255， 192.168.0.0—192.168.255.255。（Internet上保留地址用于内部）</p>
+<p>IP地址与子网掩码相与得到主机号</p>
+<p><strong>三、各种协议</strong></p>
+<p><strong>3.1 ARP**</strong>是地址解析协议，简单语言解释一下工作原理。**</p>
+<p>1：首先，每个主机都会在自己的ARP缓冲区中建立一个ARP列表，以表示IP地址和MAC地址之间的对应关系。</p>
+<p>2：当源主机要发送数据时，首先检查ARP列表中是否有对应IP地址的目的主机的MAC地址，如果有，则直接发送数据，如果没有，就向本网段的所有主机发送ARP数据包，该数据包包括的内容有：源主机IP地址，源主机MAC地址，目的主机的IP地址。</p>
+<p>3：当本网络的所有主机收到该ARP数据包时，首先检查数据包中的IP地址是否是自己的IP地址，如果不是，则忽略该数据包，如果是，则首先从数据包中取出源主机的IP和MAC地址写入到ARP列表中，如果已经存在，则覆盖，然后将自己的MAC地址写入ARP响应包中，告诉源主机自己是它想要找的MAC地址。</p>
+<p>4：源主机收到ARP响应包后。将目的主机的IP和MAC地址写入ARP列表，并利用此信息发送数据。如果源主机一直没有收到ARP响应数据包，表示ARP查询失败。<br> <strong>广播发送**</strong>ARP<strong><strong>请求，单播发送</strong></strong>ARP<strong>**响应。</strong></p>
+<p><strong>3.2 ICMP**</strong>协议：因特网控制报文协议。它是<strong><strong>TCP/IP</strong></strong>协议族的一个子协议，用于在<strong><strong>IP</strong></strong>主机、路由器之间传递控制消息。**</p>
+<p><strong>3.3 TFTP**</strong>协议：是<strong><strong>TCP/IP</strong></strong>协议族中的一个用来在客户机与服务器之间进行简单文件传输的协议，提供不复杂、开销不大的文件传输服务。**</p>
+<p><strong>3.4 HTTP**</strong>协议：超文本传输协议，是一个属于应用层的面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。**</p>
+<p><strong>3.5 DHCP**</strong>协议：动态主机配置协议，是一种让系统得以连接到网络上，并获取所需要的配置参数手段。一个局域网的网络协议，使用<strong><strong>UDP</strong></strong>协议工作，用途：给内部网络或网络服务供应商自动分配<strong><strong>IP</strong></strong>地址，给用户或者内部网络管理员作为对所有计算机作中央管理的手段。**</p>
+<p><strong>3.6 NAT**</strong>协议：网络地址转换属接入广域网<strong><strong>(WAN)</strong></strong>技术，是一种将私有（保留）地址转化为合法<strong><strong>IP</strong></strong>地址的转换技术，**</p>
+<p><strong>3.7 RARP</strong></p>
+<p>RARP是逆地址解析协议，作用是完成硬件地址到IP地址的映射，主要用于无盘工作站，因为给无盘工作站配置的IP地址不能保存。工作流程：在网络中配置一台RARP服务器，里面保存着IP地址和MAC地址的映射关系，当无盘工作站启动后，就封装一个RARP数据包，里面有其MAC地址，然后广播到网络上去，当服务器收到请求包后，就查找对应的MAC地址的IP地址装入响应报文中发回给请求者。因为需要广播请求报文，因此<strong>RARP**</strong>只能用于具有广播能力的网络。**</p>
+<p><strong>四、三次握手和四次挥手的具体过程：</strong></p>
+<p><strong>三次握手：</strong></p>
+<p>server处于Listen状态，表示服务器端的某个SOCKET处于监听状态，可以接受连接了；<br> 当client端socket执行connect连接时，首先发送SVN报文到server，进入SVN_SENT状态，等待server发送ACK；<br> server接受到SVN进入SVN_RCVD状态，（很短暂，一般查询不到），发送SVN+ACK给client端；<br> client端接受到server的ACK，发送ACK给server，server接收到后进入established状态，client也进入established状态。<br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image025.gif" alt="这里写图片描述"><br> <strong>建立**</strong>TCP<strong>**连接</strong><br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image027.jpg" alt="这里写图片描述"></p>
+<p><strong>四次挥手：</strong></p>
+<p>client发起断开连接，给server发送FIN，进入FIN_WAIT1状态，表示client想主动断开连接；<br> server接受到FIN字段后，会继续发送数据给client端，并发送ACK给client端，表明自己知道了，但是还没有准备好断开，请等我的消息；<br> 当server确定自己的数据已经发送完成，就发送FIN到client；<br> client接受到来自server的FIN，发送ACK给server端，表示可以断开连接了，再等待2ms，没有收到server端的数据后，表示可以正常断开连接。<br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image028.gif" alt="这里写图片描述"><br> <strong>断开**</strong>TCP<strong>**连接成功</strong><br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image030.jpg" alt="这里写图片描述"></p>
+<p><strong>为什么**</strong>TIME_WAIT<strong><strong>状态还需要等</strong></strong>2*MSL<strong><strong>（</strong></strong>Max SegmentLifetime<strong><strong>，最大分段生存期）秒之后才能返回到</strong></strong>CLOSED<strong>**状态呢？</strong></p>
+<p>因为虽然双方都同意关闭连接了，而且握手的4个报文也都发送完毕，按理可以直接回到CLOSED状态（就好比从SYN_SENT状态到ESTABLISH状态那样），但是我们必须假想网络是不可靠的，你无法保证你最后发送的ACK报文一定会被对方收到，就是说对方处于LAST_ACK状态下的SOCKET可能会因为超时未收到ACK报文，而重发FIN报文，所以这个TIME_WAIT状态的作用就是用来<strong>重发可能丢失的**</strong>ACK<strong>**报文</strong>。</p>
+<p><strong>为什么**</strong>TCP<strong>**连接要建立三次连接？</strong></p>
+<p>为了防止失效的连接请求又传送到主机，因而产生错误。</p>
+<p>如果使用的是两次握手建立连接，假设有这样一种场景，客户端发送了第一个请求连接并且没有丢失，只是因为在网络结点中滞留的时间太长了，由于TCP的客户端迟迟没有收到确认报文，以为服务器没有收到，此时重新向服务器发送这条报文，此后客户端和服务器经过两次握手完成连接，传输数据，然后关闭连接。此时此前滞留的那一次请求连接，网络通畅了到达了服务器，这个报文本该是失效的，但是，两次握手的机制将会让客户端和服务器再次建立连接，这将导致不必要的错误和资源的浪费。</p>
+<p>如果采用的是三次握手，就算是那一次失效的报文传送过来了，服务端接受到了那条失效报文并且回复了确认报文，但是客户端不会再次发出确认。由于服务器收不到确认，就知道客户端并没有请求连接。</p>
+<p><strong>为什么要**</strong>4<strong>**次挥手？</strong></p>
+<p><strong>TCP**</strong>协议是一种面向连接的、可靠的、基于字节流的传输层通信协议，是一个全双工模式：**<br> 1、当主机A确认发送完数据且知道B已经接受完了，想要关闭发送数据口（当然确认信号还是可以发），就会发FIN给主机B。</p>
+<p>2、主机B收到A发送的FIN，表示收到了，就会发送ACK回复。</p>
+<p>3、但这是B可能还在发送数据，没有想要关闭数据口的意思，所以FIN与ACK不是同时发送的，而是等到B数据发送完了，才会发送FIN给主机A。</p>
+<p>4、A收到B发来的FIN，知道B的数据也发送完了，回复ACK， A等待2MSL以后，没有收到B传来的任何消息，知道B已经收到自己的ACK了，A就关闭链接，B也关闭链接了。<br> <strong>确保数据能够完成传输。</strong></p>
+<p><strong>如果已经建立了连接，但是客户端突然出现故障了怎么办？</strong></p>
+<p>TCP还设有一个保活计时器，显然，客户端如果出现故障，服务器不能一直等下去，白白浪费资源。服务器每收到一次客户端的请求后都会重新复位这个计时器，时间通常是设置为2小时，若两小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75分钟发送一次。若一连发送10个探测报文仍然没反应，服务器就认为客户端出了故障，接着就关闭连接。 </p>
+<p><strong>例子：</strong></p>
+<p>三次握手：<br> A:“喂，你听得到吗？”A-&gt;SYN_SEND</p>
+<p>B:“我听得到呀，你听得到我吗？”应答与请求同时发出 B-&gt;SYN_RCVD | A-&gt;ESTABLISHED</p>
+<p>A:“我能听到你，今天balabala……”B-&gt;ESTABLISHED</p>
+<p>四次挥手：<br> A:“喂，我不说了。”A-&gt;FIN_WAIT1</p>
+<p>B:“我知道了。等下，上一句还没说完。Balabala…..”B-&gt;CLOSE_WAIT | A-&gt;FIN_WAIT2</p>
+<p>B:”好了，说完了，我也不说了。”B-&gt;LAST_ACK</p>
+<p>A:”我知道了。”A-&gt;TIME_WAIT | B-&gt;CLOSED</p>
+<p>A等待2MSL,保证B收到了消息,否则重说一次”我知道了”,A-&gt;CLOSED</p>
+<p><strong>五、在浏览器中输入**</strong><a href="http://www.baidu.com****后执行的全部过程" target="_blank" rel="noopener">www.baidu.com****后执行的全部过程</a>**</p>
+<p>1、客户端浏览器通过<a href="https://blog.csdn.net/m0_37812513/article/details/78775629" target="_blank" rel="noopener">DNS解析</a>到<a href="http://www.baidu.com的IP地址220.181.27.48，通过这个IP地址找到客户端到服务器的路径。客户端浏览器发起一个HTTP会话到220.161.27.48，然后通过TCP进行封装数据包，输入到网络层。" target="_blank" rel="noopener">www.baidu.com的IP地址220.181.27.48，通过这个IP地址找到客户端到服务器的路径。客户端浏览器发起一个HTTP会话到220.161.27.48，然后通过TCP进行封装数据包，输入到网络层。</a></p>
+<p>2、在客户端的传输层，把HTTP会话请求分成报文段，添加源和目的端口，如服务器使用80端口监听客户端的请求，客户端由系统随机选择一个端口如5000，与服务器进行交换，服务器把相应的请求返回给客户端的5000端口。然后使用IP层的IP地址查找目的端。</p>
+<p>3、客户端的网络层不用关系应用层或者传输层的东西，主要做的是通过查找路由表确定如何到达服务器，期间可能经过多个路由器，这些都是由路由器来完成的工作，我不作过多的描述，无非就是通过查找路由表决定通过那个路径到达服务器。</p>
+<p>4、客户端的链路层，包通过链路层发送到路由器，通过邻居协议查找给定IP地址的MAC地址，然后发送ARP请求查找目的地址，如果得到回应后就可以使用ARP的请求应答交换的IP数据包现在就可以传输了，然后发送IP数据包到达服务器的地址。</p>
+<p><strong>六、**</strong>TCP<strong><strong>和</strong></strong>UDP<strong>**的区别？</strong></p>
+<table>
+<thead>
+<tr>
+<th>区别</th>
+<th>TCP</th>
+<th>UDP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.连接</td>
+<td>面向连接</td>
+<td>面向非连接</td>
+</tr>
+<tr>
+<td>2.可靠性</td>
+<td>可靠</td>
+<td>非可靠</td>
+</tr>
+<tr>
+<td>3.有序性</td>
+<td>有序</td>
+<td>不保证有序</td>
+</tr>
+<tr>
+<td>4.速度</td>
+<td>慢</td>
+<td>快</td>
+</tr>
+<tr>
+<td>5.量级</td>
+<td>重量级</td>
+<td>轻量级</td>
+</tr>
+<tr>
+<td>6.拥塞控制或流量控制</td>
+<td>有</td>
+<td>没有</td>
+</tr>
+<tr>
+<td>7</td>
+<td>面向字节流，无记录边界</td>
+<td>面向报文，有记录边界</td>
+</tr>
+<tr>
+<td>8</td>
+<td>只能单播</td>
+<td>可以广播或组播</td>
+</tr>
+<tr>
+<td>9.应用场景</td>
+<td>效率低，准确性高</td>
+<td>效率高，准确性低</td>
+</tr>
+</tbody></table>
+<p><strong>TCP**</strong>对应的协议和<strong><strong>UDP</strong></strong>对应的协议**</p>
+<p><strong>TCP**</strong>对应的协议：**</p>
+<p>（1） FTP：定义了文件传输协议，使用21端口。</p>
+<p>（2） Telnet：一种用于远程登陆的端口，使用23端口，用户可以以自己的身份远程连接到计算机上，可提供基于DOS模式下的通信服务。</p>
+<p>（3） SMTP：邮件传送协议，用于发送邮件。服务器开放的是25号端口。</p>
+<p>（4） POP3：它是和SMTP对应，POP3用于接收邮件。POP3协议所用的是110端口。</p>
+<p>（5）HTTP：是从Web服务器传输超文本到本地浏览器的传送协议。</p>
+<p><strong>UDP**</strong>对应的协议：**</p>
+<p>（1） DNS：用于域名解析服务，将域名地址转换为IP地址。DNS用的是53号端口。</p>
+<p>（2） SNMP：简单网络管理协议，使用161号端口，是用来管理网络设备的。由于网络设备很多，无连接的服务就体现出其优势。</p>
+<p>（3） TFTP(Trival File Transfer Protocal)，简单文件传输协议，该协议在熟知端口69上使用UDP服务。</p>
+<p><strong>端口及对应的服务？</strong></p>
+<table>
+<thead>
+<tr>
+<th>服务</th>
+<th>端口号</th>
+<th>服务</th>
+<th>端口号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FTP</td>
+<td>21</td>
+<td>SSH</td>
+<td>22</td>
+</tr>
+<tr>
+<td>telnet</td>
+<td>23</td>
+<td>SMTP</td>
+<td>25</td>
+</tr>
+<tr>
+<td>Domain(域名服务器)</td>
+<td>53</td>
+<td>HTTP</td>
+<td>80</td>
+</tr>
+<tr>
+<td>POP3</td>
+<td>110</td>
+<td>NTP（网络时间协议）</td>
+<td>123</td>
+</tr>
+<tr>
+<td>MySQL数据库服务</td>
+<td>3306</td>
+<td>Shell或 cmd</td>
+<td>514</td>
+</tr>
+<tr>
+<td>POP-2</td>
+<td>109</td>
+<td>SQL Server</td>
+<td>1433</td>
+</tr>
+</tbody></table>
+<p><strong>TCP/IP**</strong>的流量控制？**</p>
+<p>利用滑动窗口实现流量控制，如果发送方把数据发送得过快，接收方可能会来不及接收，这就会造成数据的丢失。所谓流量控制就是让发送方的发送速率不要太快，要让接收方来得及接收。</p>
+<p>TCP为每一个连接设有一个持续计时器(persistence timer)。只要TCP连接的一方收到对方的零窗口通知，就启动持续计时器。若持续计时器设置的时间到期，就发送一个零窗口控测报文段（携1字节的数据），那么收到这个报文段的一方就重新设置持续计时器。</p>
+<p><strong>TCP**</strong>拥塞控制？**</p>
+<p>防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不致过载。拥塞控制所要做的都有一个前提：网络能够承受现有的网络负荷。拥塞控制是一个全局性的过程，涉及到所有的主机、路由器，以及与降低网络传输性能有关的所有因素。</p>
+<p>拥塞控制代价：需要获得网络内部流量分布的信息。在实施拥塞控制之前，还需要在结点之间交换信息和各种命令，以便选择控制的策略和实施控制。这样就产生了额外的开销。拥塞控制还需要将一些资源分配给各个用户单独使用，使得网络资源不能更好地实现共享。</p>
+<p><strong>几种拥塞控制方法：</strong></p>
+<p><strong>慢开始**</strong>(slow-start )<strong><strong>、拥塞避免</strong></strong>(congestion avoidance )<strong><strong>、快重传</strong></strong>( fastretransmit )<strong><strong>和快恢复</strong></strong>( fastrecovery )<strong>**。</strong></p>
+<p><strong>慢开始和拥塞避免</strong></p>
+<p>发送方维持一个拥塞窗口cwnd ( congestion window )的状态变量。拥塞窗口的大小取决于网络的拥塞程度，并且动态地在变化。发送方让自己的发送窗口等于拥塞窗口。<br> 发送方控制拥塞窗口的原则是：只要网络没有出现拥塞，拥塞窗口就再增大一些，以便把更多的分组发送出去。但只要网络出现拥塞，拥塞窗口就减小一些，以减少注入到网络中的分组数。<br> <strong>慢开始算法：</strong>当主机开始发送数据时，如果立即把大量数据字节注入到网络，那么就有可能引起网络拥塞，因为现在并不清楚网络的负荷情况。因此，较好的方法是先探测一下，即<strong>由小到大逐渐增大发送窗口</strong>，也就是说，由小到大逐渐增大拥塞窗口数值。通常在刚刚开始发送报文段时，先把拥塞窗口 cwnd 设置为一个最大报文段MSS的数值。而在每收到一个对新的报文段的确认后，把拥塞窗口增加至多一个MSS的数值。用这样的方法逐步增大发送方的拥塞窗口 cwnd ，可以使分组注入到网络的速率更加合理。</p>
+<p>每经过一个传输轮次，拥塞窗口 cwnd 就加倍。一个传输轮次所经历的时间其实就是往返时间RTT。不过“传输轮次”更加强调：把拥塞窗口cwnd所允许发送的报文段都连续发送出去，并收到了对已发送的最后一个字节的确认。<br> 另，慢开始的“慢”并不是指cwnd的增长速率慢，而是指在TCP开始发送报文段时先设置cwnd=1，使得发送方在开始时只发送一个报文段（目的是试探一下网络的拥塞情况），然后再逐渐增大cwnd。<br> 为了防止拥塞窗口cwnd增长过大引起网络拥塞，还需要设置一个慢开始门限ssthresh状态变量（如何设置ssthresh）。慢开始门限ssthresh的用法如下：<br> 当 cwnd &lt; ssthresh 时，使用上述的慢开始算法。<br> 当 cwnd &gt; ssthresh 时，停止使用慢开始算法而改用拥塞避免算法。<br> 当 cwnd = ssthresh 时，既可使用慢开始算法，也可使用拥塞控制避免算法。<br> <strong>拥塞避免算法：</strong>让拥塞窗口cwnd缓慢地增大，即每经过一个往返时间RTT就把发送方的拥塞窗口cwnd加1，而不是加倍。这样拥塞窗口cwnd按线性规律缓慢增长，比慢开始算法的拥塞窗口增长速率缓慢得多。<br> 无论在慢开始阶段还是在拥塞避免阶段，只要发送方判断网络出现拥塞（其根据就是没有收到确认），就要把慢开始门限ssthresh设置为出现拥塞时的发送方窗口值的一半（但不能小于2）。然后把拥塞窗口cwnd重新设置为1，执行慢开始算法。这样做的目的就是要迅速减少主机发送到网络中的分组数，使得发生拥塞的路由器有足够时间把队列中积压的分组处理完毕。过程图如下：<br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image031.jpg" alt="这里写图片描述"></p>
+<p><strong>快速重传：</strong></p>
+<p>那就是收到3个相同的ACK。TCP在收到乱序到达包时就会立即发送ACK，TCP利用3个相同的ACK来判定数据包的丢失，此时进行快速重传，快速重传做的事情有：</p>
+<ol>
+<li>把ssthresh设置为cwnd的一半</li>
+<li>把cwnd再设置为ssthresh的值(具体实现有些为ssthresh+3)</li>
+<li>重新进入拥塞避免阶段。</li>
+</ol>
+<p><strong>快速恢复：</strong></p>
+<ol>
+<li>当收到3个重复ACK时，把ssthresh设置为cwnd的一半，把cwnd设置为ssthresh的值加3，然后重传丢失的报文段，加3的原因是因为收到3</li>
+<li>再收到重复的ACK时，拥塞窗口增加1。</li>
+<li>收到新的数据包的ACK时，把cwnd设置为第一步中的ssthresh的值。原因是因为该ACK确认了新的数据，说明从重复ACK时的数据都已收到，该恢复过程已经结束，可以回到恢复之前的状态了，也即再次进入拥塞避免状态。</li>
+</ol>
+<p><strong>七、**</strong>IP<strong>**数据包的格式</strong></p>
+<p>IP数据报由首部 和数据 两部分组成。首部由固定部分和可选部分 组成。首部的固定部分有20字节。可选部分的长度变化范围为1——40字节。固定部分的字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>位数（bit）</th>
+<th>字段名</th>
+<th>位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>版本</td>
+<td>4 Ipv4</td>
+<td>首部长度</td>
+<td>4（表示的最大数为15个单位，一个单位表示4字节）</td>
+</tr>
+<tr>
+<td>服务类型</td>
+<td>8 以前很少用</td>
+<td>总长度</td>
+<td>16 （首部和数据部分的总长度，因此数据报的最大长度为65535字节，即64KB，但是由于链路层的MAC都有一定的最大传输单元，因此IP数据报的长度一般都不会有理论上的那么大，如果超出了MAC的最大单元就会进行分片）</td>
+</tr>
+<tr>
+<td>标识</td>
+<td>16 （相同的标识使得分片后的数据报片能正确的重装成原来的数据报）</td>
+<td>标志</td>
+<td>3 （最低位MF=1表示后面还有分片，MF=0表示这是若干个数据报片的最后一个中间位DF=0才允许分片）</td>
+</tr>
+<tr>
+<td>片偏移</td>
+<td>片偏移指出较长的分组在分片后，某片在原分组中的相对位置，都是8字节的偏移位置</td>
+<td>生存时间</td>
+<td>数据报在网络中的生存时间，指最多经过路由器的跳数</td>
+</tr>
+<tr>
+<td>协议</td>
+<td>8 （指出该数据报携带的数据是何种协议，以使得目的主机的IP层知道应将数据部分上交给哪个处理程序）如ICMP=1 IGMP=2  TCP=6 EGP=8 IGP=9 UDP=17 Ipv6=41 OSPF=89</td>
+<td>首部校验和</td>
+<td>这个部分只校验首部，不包括数据部分，计算方法：将首部划分为多个16位的部分，然后每个16位部分取反，然后计算和，再将和取反放到首部校验和。接收方收到后按同样的方法划分，取反，求和，在取反，如果结果为零，则接收，否则就丢弃</td>
+</tr>
+<tr>
+<td>源地址</td>
+<td>32</td>
+<td>目的地址</td>
+<td>32</td>
+</tr>
+</tbody></table>
+<p><strong>八、**</strong>TCP<strong>**数据报的格式？</strong></p>
+<p><img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image033.jpg" alt="这里写图片描述"><br> 一个TCP报文段分为首部和数据两部分。首部由固定部分和选项部分组成，固定部分是20字节。TCP首部的最大长度为60。首部固定部分字段：<br> <img src="file:///C:/Users/zyx/AppData/Local/Temp/msohtmlclip1/01/clip_image035.jpg" alt="这里写图片描述"></p>
+<p><strong>TCP**</strong>的<strong><strong>12</strong></strong>字节伪首部：**</p>
+<table>
+<thead>
+<tr>
+<th>源IP地址（4）</th>
+<th>目的IP地址（4）</th>
+<th>0 (1)</th>
+<th>6(1) 代表这是TCP，IP协议中提到过</th>
+<th>TCP长度（2）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>TCP**</strong>数据报的格式？**</p>
+<p>用户数据报UDP由首部和数据部分组成。首部只有8个字节，由4个字段组成，每个字段都是两个字节。</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>字节</th>
+<th>字段名</th>
+<th>字节</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>源端口</td>
+<td>2</td>
+<td>目的端口</td>
+<td>2</td>
+</tr>
+<tr>
+<td>长度</td>
+<td>2</td>
+<td>检验和</td>
+<td>2 （检验首部和数据，加12字节的伪首部）</td>
+</tr>
+</tbody></table>
+<p><strong>UDP**</strong>的<strong><strong>12</strong></strong>字节伪首部：**</p>
+<table>
+<thead>
+<tr>
+<th>源IP地址（4）</th>
+<th>目的IP地址（4）</th>
+<th>0 (1)</th>
+<th>17(1) 代表这是UDP</th>
+<th>UDP长度（2）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>以太网**</strong>MAC<strong>**帧格式？</strong></p>
+<table>
+<thead>
+<tr>
+<th>前导码</th>
+<th>前定界符</th>
+<th>目的地址</th>
+<th>源目的地址</th>
+<th>长度字段</th>
+<th>数据字段</th>
+<th>校验字段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>7B</td>
+<td>1B</td>
+<td>6B</td>
+<td>6B</td>
+<td>2B</td>
+<td>46-1500</td>
+<td>4B</td>
+</tr>
+</tbody></table>
+<p><strong>九、了解交换机、路由器、网关的概念，并知道各自的用途</strong></p>
+<p><strong>1**</strong>）交换机**</p>
+<p>在计算机网络系统中，交换机是针对共享工作模式的弱点而推出的。交换机拥有一条高带宽的背部总线和内部交换矩阵。交换机的所有的端口都挂接在这条背 部总线上，当控制电路收到数据包以后，处理端口会查找内存中的地址对照表以确定目的MAC（网卡的硬件地址）的NIC（网卡）挂接在哪个端口上，通过内部 交换矩阵迅速将数据包传送到目的端口。目的MAC若不存在，交换机才广播到所有的端口，接收端口回应后交换机会“学习”新的地址，并把它添加入内部地址表 中。</p>
+<p>交换机工作于OSI参考模型的第二层，即数据链路层。交换机内部的CPU会在每个端口成功连接时，通过ARP协议学习它的MAC地址，保存成一张 ARP表。在今后的通讯中，发往该MAC地址的数据包将仅送往其对应的端口，而不是所有的端口。因此，交换机可用于划分数据链路层广播，即冲突域；但它不 能划分网络层广播，即广播域。</p>
+<p>交换机被广泛应用于二层网络交换，俗称“二层交换机”。</p>
+<p>交换机的种类有：二层交换机、三层交换机、四层交换机、七层交换机分别工作在OSI七层模型中的第二层、第三层、第四层和第七层，并因此而得名。</p>
+<p><strong>2**</strong>）路由器**</p>
+<p>路由器（Router）是一种计算机网络设备，提供了路由与转送两种重要机制，可以决定数据包从来源端到目的端所经过 的路由路径（host到host之间的传输路径），这个过程称为路由；将路由器输入端的数据包移送至适当的路由器输出端(在路由器内部进行)，这称为转 送。路由工作在OSI模型的第三层——即网络层，例如网际协议。</p>
+<p>路由器的一个作用是连通不同的网络，另一个作用是选择信息传送的线路。 路由器与交换器的差别，路由器是属于OSI第三层的产品，交换器是OSI第二层的产品(这里特指二层交换机)。</p>
+<p><strong>说说静态路由和动态路由有什么区别。</strong></p>
+<p>静态路由是由管理员手工配置的，适合比较简单的网络或需要做路由特殊控制。而动态路由则是由动态路由协议自动维护的，不需人工干预，适合比较复杂大型的网络。<br> 路由器能够自动地建立自己的路由表，并且能够根据实际实际情况的变化适时地进行调整。动态路由机制的运作依赖路由器的两个基本功能：对路由表的维护；路由器之间适时的路由信息交换。</p>
+<p><strong>在**</strong>Linux<strong>**环境中怎么配置一条默认路由？</strong></p>
+<p>在linux上可以用“route add default gw&lt;默认路由器 IP&gt;”命令配置一条默认路由。</p>
+<p><strong>3**</strong>）网关**</p>
+<p>网关（Gateway），网关顾名思义就是连接两个网络的设备，区别于路由器（由于历史的原因，许多有关TCP/IP 的文献曾经把网络层使用的路由器（Router）称为网关，在今天很多局域网采用都是路由来接入网络，因此现在通常指的网关就是路由器的IP），经常在家 庭中或者小型企业网络中使用，用于连接局域网和Internet。 网关也经常指把一种协议转成另一种协议的设备，比如语音网关。</p>
+<p>在传统TCP/IP术语中，网络设备只分成两种，一种为网关（gateway），另一种为主机（host）。网关能在网络间转递数据包，但主机不能 转送数据包。在主机（又称终端系统，end system）中，数据包需经过TCP/IP四层协议处理，但是在网关（又称中介系 统，intermediate system）只需要到达网际层（Internet layer），决定路径之后就可以转送。在当时，网关 （gateway）与路由器（router）还没有区别。</p>
+<p>在现代网络术语中，网关（gateway）与路由器（router）的定义不同。网关（gateway）能在不同协议间移动数据，而路由器（router）是在不同网络间移动数据，相当于传统所说的IP网关（IP gateway）。</p>
+<p>网关是连接两个网络的设备，对于语音网关来说，他可以连接PSTN网络和以太网，这就相当于VOIP，把不同电话中的模拟信号通过网关而转换成数字信号，而且加入协议再去传输。在到了接收端的时候再通过网关还原成模拟的电话信号，最后才能在电话机上听到。</p>
+<p>对于以太网中的网关只能转发三层以上数据包，这一点和路由是一样的。而不同的是网关中并没有路由表，他只能按照预先设定的不同网段来进行转发。网关最重要的一点就是端口映射，子网内用户在外网看来只是外网的IP地址对应着不同的端口，这样看来就会保护子网内的用户。</p>
+<p><strong>4**</strong>）网络接口卡（网卡）的功能？**</p>
+<p>（1）进行串行/并行转换。</p>
+<p>（2）对数据进行缓存。</p>
+<p>（3）在计算机的操作系统安装设备驱动程序。</p>
+<p>（4）实现以太网协议。<br> <strong>5**</strong>）网桥的作用？**</p>
+<p>网桥是一个局域网与另一个局域网之间建立连接的桥梁</p>
+<p><strong>十、**</strong>IO<strong>**中同步与异步，阻塞与非阻塞区别</strong></p>
+<p>同步和异步关注的是消息通信机制 (synchronous communication/asynchronous communication)<br> 所谓同步，就是在发出一个<em>调用</em>时，在没有得到结果之前，该<em>调用</em>就不返回。但是一旦调用返回，就得到返回值了。<br> 换句话说，就是由<em>调用者</em>主动等待这个<em>调用</em>的结果。<br> 而异步则是相反，<em>调用</em>在发出之后，这个调用就直接返回了，所以没有返回结果。换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。而是在<em>调用</em>发出后，<em>被调用者</em>通过状态、通知来通知调用者，或通过回调函数处理这个调用。</p>
+<p>阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态.</p>
+<p>阻塞调用是指调用结果返回之前，当前线程会被挂起。函数只有在得到结果之后才会返回。</p>
+<p>非阻塞：不能立刻得到结果之前，该函数不会阻塞当前线程，而会立刻返回。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2020/05/13/%E6%B5%8B%E8%AF%95%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Zyx">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to my Blog-Zzzzzz">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/13/%E6%B5%8B%E8%AF%95%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">测试知识</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-13 09:18:39" itemprop="dateCreated datePublished" datetime="2020-05-13T09:18:39+08:00">2020-05-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>1</strong>、问：你在测试中发现了一个bug<strong><strong>，但是开发经理认为这不是一个bug</strong></strong>，你应该怎样解决？**</p>
+<p>首先，将问题提交到缺陷管理库里面进行备案。</p>
+<p>然后，要获取判断的依据和标准：</p>
+<ul>
+<li>根据需求说明书、产品说明、设计文档等，确认实际结果是否与计划有不一致的地方，提供缺陷是否确认的直接依据；</li>
+<li>如果没有文档依据，可以根据类似软件的一般特性来说明是否存在不一致的地方，来确认是否是缺陷；</li>
+<li>根据用户的一般使用习惯，来确认是否是缺陷；</li>
+<li>与设计人员、开发人员和客户代表等相关人员探讨，确认是否是缺陷；</li>
+</ul>
+<p>合理的论述，向测试经理说明自己的判断的理由，注意客观、严谨，不参杂个人情绪。</p>
+<p>等待测试经理做出最终决定，如果仍然存在争议，可以通过公司政策所提供的渠道，向上级反映，并有上级做出决定。</p>
+<p><strong>2**</strong>、问：给你一个网站，你如何测试？**</p>
+<p>首先，查找需求说明、网站设计等相关文档，分析测试需求。</p>
+<p>制定测试计划，确定测试范围和测试策略，一般包括以下几个部分：功能性测试；界面测试；性能测试；数据库测试；安全性测试；兼容性测试</p>
+<p><strong>设计测试用例：</strong></p>
+<p><strong>功能性测试</strong>可以包括，但不限于以下几个方面：</p>
+<ul>
+<li>链接测试。链接是否正确跳转，是否存在空页面和无效页面，是否有不正确的出错信息返回。</li>
+<li>提交功能的测试。</li>
+<li>多媒体元素是否可以正确加载和显示。</li>
+<li>多语言支持是否能够正确显示选择的语言等。</li>
+</ul>
+<p><strong>界面测试</strong>可以包括但不限于一下几个方面：</p>
+<ul>
+<li>页面是否风格统一，美观</li>
+<li>页面布局是否合理，重点内容和热点内容是否突出</li>
+<li>控件是否正常使用</li>
+<li>对于必须但未安装的控件，是否提供自动下载并安装的功能</li>
+<li>文字检查</li>
+</ul>
+<p><strong>性能测试</strong>一般从以下两个方面考虑：</p>
+<p>压力测试；负载测试；强度测试</p>
+<p><strong>数据库测试</strong>要具体决定是否需要开展。数据库一般需要考虑连结性，对数据的存取操作，数据内容的验证等方面。</p>
+<p><strong>安全性测试</strong>：</p>
+<ul>
+<li>基本的登录功能的检查</li>
+<li>是否存在溢出错误，导致系统崩溃或者权限泄露</li>
+<li>相关开发语言的常见安全性问题检查，例如SQL注入等</li>
+<li>如果需要高级的安全性测试，确定获得专业安全公司的帮助，外包测试，或者获取支持</li>
+</ul>
+<p><strong>兼容性测试</strong>，根据需求说明的内容，确定支持的平台组合：</p>
+<ul>
+<li>浏览器的兼容性；</li>
+<li>操作系统的兼容性；</li>
+<li>软件平台的兼容性；</li>
+<li>数据库的兼容性</li>
+</ul>
+<p>开展测试，并记录缺陷。合理的安排调整测试进度，提前获取测试所需的资源，建立管理体系（例如，需求变更、风险、配置、测试文档、缺陷报告、人力资源等内容）。</p>
+<p>定期评审，对测试进行评估和总结，调整测试的内容。</p>
+<p><strong>3**</strong>、在搜索引擎中输入汉字就可以解析到对应的域名，请问如何用LoadRunner<strong>**进行测试</strong>。</p>
+<ul>
+<li>建立测试计划，确定测试标准和测试范围</li>
+<li>设计典型场景的测试用例，覆盖常用业务流程和不常用的业务流程等</li>
+<li>根据测试用例，开发自动测试脚本和场景：</li>
+</ul>
+<p><strong>录制测试脚本：</strong>新建一个脚本（Web/HTML协议）；点击录制按钮，在弹出的对话框的URL中输入”about:blank”；在打开的浏览器中进行正常操作流程后，结束录制；调试脚本并保存，可能要注意到字符集的关联。</p>
+<p><strong>设置测试场景：</strong>针对性能设置测试场景，主要判断在正常情况下，系统的平均事务响应时间是否达标；针对压力负载设置测试场景，主要判断在长时间处于满负荷或者超出系统承载能力的条件下，系统是否会崩溃；执行测试，获取测试结果，分析测试结果</p>
+<p><strong>4**</strong>、问：一台客户端有三百个客户与三百个客户端有三百个客户对服务器施压，有什么区别?**</p>
+<ul>
+<li>300个用户在一个客户端上，会占用客户机更多的资源，而影响测试的结果。线程之间可能发生干扰，而产生一些异常。</li>
+<li>300个用户在一个客户端上，需要更大的带宽。</li>
+<li>IP地址的问题，可能需要使用IP Spoof来绕过服务器对于单一IP地址最大连接数的限制。</li>
+<li>所有用户在一个客户端上，不必考虑分布式管理的问题；而用户分布在不同的客户端上，需要考虑使用控制器来整体调配不同客户机上的用户。同时，还需要给予相应的权限配置和防火墙设置。</li>
+</ul>
+<p><strong>5**</strong>、试述软件的概念和特点？软件复用的含义？构件包括哪些？**</p>
+<p>软件是计算机系统中与硬件相互依存的另一部分，与<a href="http://baike.baidu.com/view/3314.htm" target="_blank" rel="noopener">计算机</a>系统操作有关的计算机<a href="http://baike.baidu.com/view/17674.htm" target="_blank" rel="noopener">程序</a>、规程、规则，以及可能有的文件、文档及<a href="http://baike.baidu.com/view/38752.htm" target="_blank" rel="noopener">数据</a>。</p>
+<p>软件复用(SoftWare Reuse)是将已有软件的各种有关知识用于建立新的软件，以缩减软件开发和维护的花费。软件复用是提高软件生产力和质量的一种重要技术。早期的软件复用主要是代码级复用，被复用的知识专指程序，后来扩大到包括领域知识、开发经验、设计决定、<a href="http://baike.baidu.com/view/1188494.htm" target="_blank" rel="noopener">体系结构</a>、需求、设计、代码和文档等一切有关方面。</p>
+<p>可以被复用的软件成分一般称作可复用构件</p>
+<p><strong>6**</strong>、软件生存周期及其模型是什么？**</p>
+<p><strong>软件生存周期（Software life cycle）</strong>又称为软件生命期，生存期。是指从形成开发软件概念起，所开发的软件使用以后，知道失去使用价值消亡为止的整个过程。一般来说，整个生存周期包括计划（定义）、开发、运行（维护）三个时期，每个时期又划分为若干个阶段。每个阶段有明确的任务。</p>
+<p><strong>周期模型（典型的几种）：</strong></p>
+<ul>
+<li>瀑布模型</li>
+<li>快速原型模型：快速原型模型允许在<a href="http://baike.baidu.com/view/111493.htm" target="_blank" rel="noopener">需求分析</a>阶段对软件的需求进行初步而非完全的分析和定义，快速设计开发出<a href="http://baike.baidu.com/view/8343.htm" target="_blank" rel="noopener">软件系统</a>的原型，该原型向用户展示待开发软件的全部或部分功能和性能；用户对该原型进行测试评定，给出具体改进意见以丰富细化<a href="http://baike.baidu.com/view/10192.htm" target="_blank" rel="noopener">软件需求</a>；开发人员据此对软件进行修改完善，直至用户满意认可之后，进行软件的完整实现及测试、维护。</li>
+<li>迭代模型：迭代包括产生产品发布（稳定、可执行的产品版本）的全部开发活动和要使用该发布必需的所有其他外围元素。在某种程度上，开发迭代是一次完整地经过所有工作流程的过程：需求分析、设计、实施和测试工作流程。实质上，它类似小型的瀑布式项目。RUP认为，所有的阶段都可以细分为迭代。每一次的迭代都会产生一个可以发布的产品，这个产品是最终产品的一个子集。</li>
+</ul>
+<p><strong>生命周期阶段：</strong></p>
+<ul>
+<li>软件计划与可行性分析</li>
+<li>需求分析</li>
+<li>软件设计</li>
+<li>编码</li>
+<li>软件测试</li>
+<li>运行与维护</li>
+</ul>
+<p><strong>7**</strong>、什么是软件测试？软件测试的目的与原则**</p>
+<p>在规定的条件下对程序进行操作，以发现程序错误，衡量软件质量，并对其是否能满足设计要求进行评估的过程。</p>
+<p><strong>软件测试的目的：</strong></p>
+<ul>
+<li>测试是程序的执行过程，目的在于发现错误</li>
+<li>一个成功的测试用例在于发现至今未发现的错误</li>
+<li>一个成功的测试是发现了至今未发现的错误的测试</li>
+<li>确保产品完成了它所承诺或公布的功能，并且用户可以访问到的功能都有明确的书面说明。</li>
+<li>确保产品满足性能和效率的要求</li>
+<li>确保产品是健壮的和适应用户环境的</li>
+</ul>
+<p><strong>软件测试的原则：</strong></p>
+<ul>
+<li>测试用例中一个必须部分是对预期输出或接过进行定义</li>
+<li>程序员应避免测试自己编写的程序</li>
+<li>编写软件的组织不应当测试自己编写的软件</li>
+<li>应当彻底检查每个测试的执行结果</li>
+<li>测试用例的编写不仅应当根据有效和预料到的输入情况，而且也应当根据无效和未预料到的输入情况</li>
+<li>检擦程序是否“未做其应该做的”仅是测试的一半，测试的另一半是检查程序是否“做了其不应该做的”</li>
+<li>应避免测试用例用后即弃，除非软件本身就是个一次性的软件</li>
+<li>计划测试工作时不应默许假定不会发现错误</li>
+<li>程序某部分存在更多错误的可能性，与该部分已经发现错误的数量成正比</li>
+<li>软件测试是一项极富创造性，极具智力的挑战性的工作</li>
+</ul>
+<p><strong>8**</strong>、软件配置管理的作用？软件配置包括什么？**</p>
+<p><a href="http://baike.baidu.com/view/37.htm" target="_blank" rel="noopener">软件</a>配置管理（Software Configuration Management，SCM）是一种标识、组织和控制修改的技术。<a href="http://baike.baidu.com/view/551674.htm" target="_blank" rel="noopener">软件配置</a>管理应用于整个<a href="http://baike.baidu.com/view/2122528.htm" target="_blank" rel="noopener">软件工程过程</a>。在软件建立时变更是不可避免的，而变更加剧了项目中<a href="http://baike.baidu.com/view/190611.htm" target="_blank" rel="noopener">软件开发</a>者之间的混乱。SCM活动的目标就是为了标识变更、控制变更、确保变更正确实现并向其他有关人员<a href="http://baike.baidu.com/view/303324.htm" target="_blank" rel="noopener">报告</a>变更。从某种角度讲，SCM是一种标识、组织和控制修改的技术，目的是使错误降为最小并最有效地提高<a href="http://baike.baidu.com/view/662076.htm" target="_blank" rel="noopener">生产效率</a>。</p>
+<p>软件配置包括如下内容：配置项识别、工作空间管理、版本控制、变更控制、状态报告、配置审计</p>
+<p><strong>9**</strong>、什么是软件质量？**</p>
+<p>概括地说，软件质量就是“软件与明确的和隐含的定义的需求相一致的程度”。具体地说，软件质量是软件符合明确叙述的功能和性能需求、文档中明确描述的开发标准、以及所有专业开发的软件都应具有的隐含特征的程度。 影响软件质量的主要因素，这些因素是从管理角度对软件质量的度量。可划分为三组，分别反应用户在使用软件产品时的三种观点。正确性、<a href="http://baike.baidu.com/view/963152.htm" target="_blank" rel="noopener">健壮性</a>、效率、完整性、可用性、风险（产品运行）；可理解性、可维修性、灵活性、<a href="http://baike.baidu.com/view/2194552.htm" target="_blank" rel="noopener">可测试性</a>（产品修改）；可移植性、可再用性、互运行性（产品转移）。</p>
+<p><strong>10**</strong>、目前主要的测试用例设计方法是什么？**</p>
+<p>白盒测试：逻辑覆盖、循环覆盖、基本路径覆盖</p>
+<p>黑盒测试：边界值分析法、等价类划分、错误猜测法、因果图法、状态图法、测试大纲法、随机测试、场景法</p>
+<p><strong>11**</strong>、软件的安全性应从哪几个方面去测试？**</p>
+<p>软件安全性测试包括程序、数据库安全性测试。根据系统安全指标不同测试策略也不同。</p>
+<ul>
+<li><strong>用户认证安全</strong>的测试要考虑问题： 明确区分系统中不同用户权限 、系统中会不会出现用户冲突 、系统会不会因用户的权限的改变造成混乱 、用户登陆密码是否是可见、可复制 、是否可以通过绝对途径登陆系统（拷贝用户登陆后的链接直接进入系统）、用户退出系统后是否删除了所有鉴权标记，是否可以使用后退键而不通过输入口令进入系统 、系统网络安全的测试要考虑问题 、测试采取的防护措施是否正确装配好，有关系统的补丁是否打上 、模拟非授权攻击，看防护系统是否坚固 、采用成熟的网络漏洞检查工具检查系统相关漏洞（即用最专业的黑客攻击工具攻击试一下，现在最常用的是 NBSI 系列和 IPhacker IP ） 、采用各种木马检查工具检查系统木马情况 、采用各种防外挂工具检查系统各组程序的外挂漏洞</li>
+<li><strong>数据库安全</strong>考虑问题： 系统数据是否机密（比如对银行系统，这一点就特别重要，一般的网站就没有太高要求）、系统数据的完整性（我刚刚结束的企业实名核查服务系统中就曾存在数据的不完整，对于这个系统的功能实现有了障碍） 、系统数据可管理性 、系统数据的独立性 、系统数据可备份和恢复能力（数据备份是否完整，可否恢复，恢复是否可以完整）</li>
+</ul>
+<p><strong>12**</strong>、什么是测试用例** <strong>什么是测试脚本</strong> <strong>两者的关系是什么？</strong></p>
+<p>为实施测试而向被测试系统提供的输入数据、操作或各种环境设置以及期望结果的一个特定的集合。</p>
+<p>测试脚本是为了进行自动化测试而编写的脚本。</p>
+<p>测试脚本的编写必须对应相应的测试用例</p>
+<p><strong>13**</strong>、简述什么是静态测试、动态测试、黑盒测试、白盒测试、α测试** <strong>β测试</strong></p>
+<ul>
+<li><strong>静态测试</strong>是不运行程序本身而寻找程序代码中可能存在的错误或评估程序代码的过程。 </li>
+<li><strong>动态测试</strong>是实际运行被测程序，输入相应的测试实例，检查运行结果与预期结果的差异，判定执行结果是否符合要求，从而检验程序的正确性、可靠性和有效性，并分析系统运行效率和健壮性等性能。</li>
+<li><strong>黑盒测试</strong>一般用来确认软件功能的正确性和可操作性,目的是检测软件的各个功能是否能得以实现,把被测试的程序当作一个黑盒,不考虑其内部结构,在知道该程序的输入和输出之间的关系或程序功能的情况下,依靠软件规格说明书来确定测试用例和推断测试结果的正确性。</li>
+<li><strong>白盒测试</strong>根据软件内部的逻辑结构分析来进行测试,是基于代码的测试，测试人员通过阅读程序代码或者通过使用开发工具中的单步调试来判断软件的质量，一般黑盒测试由项目经理在程序员开发中来实现。</li>
+<li><strong>α测试</strong>是由一个用户在开发环境下进行的测试，也可以是公司内部的用户在模拟实际操作环境下进行的受控测试，Alpha测试不能由程序员或测试员完成。</li>
+<li><strong>β测试</strong>是软件的多个用户在一个或多个用户的实际使用环境下进行的测试。开发者通常不在测试现场，Beta测试不能由程序员或测试员完成。</li>
+</ul>
+<p><strong>14**</strong>、软件质量保证体系是什么** <strong>国家标准中与质量保证管理相关的几个标准是什么?**</strong>他们的编号和全称是什么?**</p>
+<p>SQA由一套软件工程过程和方法组成，以保证（软件的）质量。SQA贯穿整个软件开发过程，(它)应包括需求文档评审、代码控制、代码评审、变更管理、配置管理、版本管理和软件测试。</p>
+<p><a href="http://baike.baidu.com/subview/37/6030295.htm" target="_blank" rel="noopener">软件</a><a href="http://baike.baidu.com/subview/13930/5063889.htm" target="_blank" rel="noopener">质量</a>保证（SQA-Software Quality Assurance）是建立一套有计划，有系统的方法，来向管理层保证拟定出的标准、步骤、实践和方法能够正确地被所有项目所采用。软件质量保证的目的是使<a href="http://baike.baidu.com/view/2207.htm" target="_blank" rel="noopener">软件过程</a>对于管理人员来说是可见的。它通过对软件产品和活动进行评审和审计来验证软件是合乎标准的。软件质量保证组在项目开始时就一起参与建立计划、标准和过程。这些将使软件项目满足机构方针的要求。</p>
+<p><strong>15**</strong>、软件产品质量特性是什么?**</p>
+<p>功能性：适应性、准确性、互操作性、依从性、安全性。</p>
+<p>可靠性：成熟性、容错性、易恢复性。</p>
+<p>可使用性：易理解性、易学习性、易操作性。</p>
+<p>效率：时间特性、资源特性。</p>
+<p>可维护性：易分析性、易变更性、稳定性、易测试性。</p>
+<p>可移植性： 适应性、易安装性、遵循性、易替换性</p>
+<p><strong>16**</strong>、软件测试的策略是什么?**</p>
+<p>软件测试策略：在一定的软件测试标准、测试规范的指导下，依据测试项目的特定环境约束而规定的软件测试的原则、方式、方法的集合。</p>
+<p><strong>17**</strong>、软件测试分为几个阶段** <strong>各阶段的测试策略和要求是什么?</strong></p>
+<p>和开发过程相对应，测试过程会依次经历单元测试、集成测试、系统测试、验收测试四个主要阶段：</p>
+<ul>
+<li>单元测试：单元测试是针对软件设计的最小单位––程序模块甚至代码段进行正确性检验的测试工作，通常由开发人员进行。</li>
+<li>集成测试：集成测试是将模块按照设计要求组装起来进行测试，主要目的是发现与接口有关的问题。由于在产品提交到测试部门前，产品开发小组都要进行联合调试，因此在大部分企业中集成测试是由开发人员来完成的。</li>
+<li>系统测试：系统测试是在集成测试通过后进行的，目的是充分运行系统，验证各子系统是否都能正常工作并完成设计的要求。它主要由测试部门进行，是测试部门最大最重要的一个测试，对产品的质量有重大的影响。</li>
+<li>验收测试：验收测试以需求阶段的《需求规格说明书》为验收标准，测试时要求模拟实际用户的运行环境。对于实际项目可以和客户共同进行，对于产品来说就是最后一次的系统测试。测试内容为对功能模块的全面测试，尤其要进行文档测试。</li>
+</ul>
+<p><strong>单元测试测试策略：</strong></p>
+<p>自顶向下的单元测试策略：比孤立单元测试的成本高很多，不是单元测试的一个好的选择。</p>
+<p>自底向上的单元测试策略：比较合理的单元测试策略，但测试周期较长。</p>
+<p>孤立单元测试策略：最好的单元测试策略。</p>
+<p><strong>集成测试的测试策略：</strong></p>
+<p>大爆炸集成：适应于一个维护型项目或被测试系统较小</p>
+<p>自顶向下集成：适应于产品控制结构比较清晰和稳定；高层接口变化较小；底层接口未定义或经常可能被修改；产口控制组件具有较大的技术风险，需要尽早被验证；希望尽早能看到产品的系统功能行为。</p>
+<p>自底向上集成：适应于底层接口比较稳定；高层接口变化比较频繁；底层组件较早被完成。</p>
+<p>基于进度的集成<br>   优点：具有较高的并行度；能够有效缩短项目的开发进度。<br>   缺点：桩和驱动工作量较大；有些接口测试不充分；有些测试重复和浪费。</p>
+<p><strong>系统测试的测试策略：</strong></p>
+<p>数据和数据库完整性测试；功能测试；用户界面测试；性能评测；负载测试；强度测试；容量测试；安全性和访问控制测试；故障转移和恢复测试；配置测试；安装测试；加密测试；可用性测试；版本验证测试；文档测试</p>
+<p><strong>18**</strong>、软件测试各个阶段通常完成什么工作？各个阶段的结果文件是什么？包括什么内容？**</p>
+<p><strong>单元测试阶段：</strong>各独立单元模块在与系统地其他部分相隔离的情况下进行测试，单元测试针对每一个程序模块进行正确性校验，检查各个程序模块是否正确地实现了规定的功能。生成单元测试报告，提交缺陷报告。</p>
+<p><strong>集成测试阶段：</strong>集成测试是在单元测试的基础上，测试在将所有的软件单元按照概要设计规格说明的要求组装成模块、子系统或系统的过程中各部分工作是否达到或实现相应技术指标及要求的活动。该阶段生成集成测试报告，提交缺陷报告。</p>
+<p><strong>系统测试阶段：</strong>将通过确认测试的软件，作为整个给予计算机系统的一个元素，与计算机硬件、外设、某些支持软件、数据和人员等其他系统元素结合在一起，在实际运行环境下，对计算机系统进行全面的功能覆盖。该阶段需要提交测试总结和缺陷报告。</p>
+<p><strong>19**</strong>、测试人员在软件开发过程中的任务是什么？**</p>
+<p>1、尽可能早的找出系统中的Bug；<br>2、避免软件开发过程中缺陷的出现；<br>3、衡量软件的品质，保证系统的质量；<br>4、关注用户的需求，并保证系统符合用户需求。<br>总的目标是：确保软件的质量。</p>
+<p><strong>20、在您以往的工作中，一条软件缺陷（或者叫Bug）记录都包含了哪些内容？如何提交高质量的软件缺陷（Bug）记录？</strong></p>
+<p>一条Bug记录最基本应包含：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">bug编号；</span><br><span class="line">bug严重级别，优先级；</span><br><span class="line">bug产生的模块；</span><br><span class="line">首先要有bug摘要，阐述bug大体的内容；</span><br><span class="line">bug对应的版本；</span><br><span class="line">bug详细现象描述，包括一些截图、录像....等等；</span><br><span class="line">bug出现时的测试环境，产生的条件即对应操作步骤；</span><br><span class="line"></span><br><span class="line">高质量的Bug记录：</span><br><span class="line">1) 通用UI要统一、准确</span><br><span class="line">缺陷报告的UI要与测试的软件UI保持一致，便于查找定位。</span><br><span class="line">2) 尽量使用业界惯用的表达术语和表达方法</span><br><span class="line">使用业界惯用的表达术语和表达方法，保证表达准确，体现专业化。</span><br><span class="line">3) 每条缺陷报告只包括一个缺陷</span><br><span class="line">每条缺陷报告只包括一个缺陷，可以使缺陷修正者迅速定位一个缺陷，集中精力每次只修正一个缺陷。校验者每次只校验一个缺陷是否已经正确修正。</span><br><span class="line">4) 不可重现的缺陷也要报告</span><br><span class="line">首先缺陷报告必须展示重现缺陷的能力。不可重现的缺陷要尽力重现，若尽力之后仍不能重现，仍然要报告此缺陷，但在报告中要注明无法再现，缺陷出现的频率。</span><br><span class="line">5) 明确指明缺陷类型</span><br><span class="line">根据缺陷的现象，总结判断缺陷的类型。例如，即功能缺陷、界面缺陷、数据缺陷，合理化建议这是最常见的缺陷或缺陷类型，其他形式的缺陷或缺陷也从属于其中某种形式。</span><br><span class="line">6) 明确指明缺陷严重等级和优先等级</span><br><span class="line">时刻明确严重等级和优先等级之间的差别。高严重问题可能不值得解决，小装饰性问题可能被当作高优先级。</span><br><span class="line">7) 描述 (Description) ，简洁、准确，完整，揭示缺陷实质，记录缺陷或缺陷出现的位置</span><br><span class="line">描述要准确反映缺陷的本质内容，简短明了。为了便于在软件缺陷管理数据库中寻找制定的测试缺陷，包含缺陷发生时的用户界面（UI）是个良好的习惯。例如记录对话框的标题、菜单、按钮等控件的名称。</span><br><span class="line">8) 短行之间使用自动数字序号，使用相同的字体、字号、行间距</span><br><span class="line">短行之间使用自动数字序号，使用相同的字体、字号、行间距，可以保证各条记录格式一致，做到规范专业。</span><br><span class="line">9) 每一个步骤尽量只记录一个操作</span><br><span class="line">保证简洁、条理井然，容易重复操作步骤。</span><br><span class="line">10) 确认步骤完整，准确，简短</span><br><span class="line">保证快速准确的重复缺陷，“完整”即没有缺漏，“准确”即步骤正确，“简短”即没有多余的步骤。</span><br><span class="line">11) 根据缺陷，可选择是否进行图象捕捉</span><br><span class="line">为了直观的观察缺陷或缺陷现象，通常需要附加缺陷或缺陷出现的界面，以图片的形式作为附件附着在记录的“附件”部分。为了节省空间，又能真实反映缺陷或缺陷本质，可以捕捉缺陷或缺陷产生时的全屏幕，活动窗口和局部区域。为了迅速定位、修正缺陷或缺陷位置，通常要求附加中文对照图。</span><br><span class="line"> 附加必要的特殊文档和个人建议和注解</span><br><span class="line">如果打开某个特殊的文档而产生的缺陷或缺陷，则必须附加该文档，从而可以迅速再现缺陷或缺陷。有时，为了使缺陷或缺陷修正者进一步明确缺陷或缺陷的表现，可以附加个人的修改建议或注解。</span><br><span class="line">12) 检查拼写和语法缺陷</span><br><span class="line">在提交每条缺陷或缺陷之前，检查拼写和语法，确保内容正确，正确的描述缺陷。</span><br><span class="line">13) 尽量使用短语和短句，避免复杂句型句式</span><br><span class="line">软件缺陷管理数据库的目的是便于定位缺陷，因此，要求客观的描述操作步骤，不需要修饰性的词汇和复杂的句型，增强可读性。</span><br><span class="line">以上概括了报告测试缺陷的规范要求，随着软件的测试要求不同，测试者经过长期测试，积累了相应的测试经验，将会逐渐养成良好的专业习惯，不断补充新的规范书写要求。此外，经常阅读、学习其他测试工程师的测试缺陷报告，结合自己以前的测试缺陷报告进行对比和思考，可以不断提高技巧。</span><br><span class="line">14) 缺陷描述内容</span><br><span class="line">缺陷描述的内容可以包含缺陷操作步骤，实际结果和期望结果。操作步骤可以方便开发人员再现缺陷进行修正，有些开发的再现缺陷能力很差，虽然他明白你所指的缺陷，但就是无法再现特别是对系统不熟悉的新加入开发人员，介绍步骤可以方便他们再现。实际结果可以让开发明白错误是什么，期望结果可以让开发了解正确的结果应该是如何。</span><br></pre></td></tr></table></figure>
+
+
+
+<p>21<strong>、黑盒测试和白盒测试是软件测试的两种基本方法，请分别说明各自的优点和缺点！</strong>    </p>
+<p>黑盒测试的优点有：比较简单，不需要了解程序内部的代码及实现；与软件的内部实现无关； 从用户角度出发，能很容易的知道用户会用到哪些功能，会遇到哪些问题；基于软件开发文档，所以也能知道软件实现了文档中的哪些功能；在做软件自动化测试时较为方便。</p>
+<p>黑盒测试的缺点有：不可能覆盖所有的代码，覆盖率较低，大概只能达到总代码量的30%；自动化测试的复用性较低。</p>
+<p>白盒测试的优点有：帮助软件测试人员增大代码的覆盖率，提高代码的质量，发现代码中隐  藏的问题。</p>
+<p>白盒测试的缺点有：程序运行会有很多不同的路径，不可能测试所有的运行路径；测试基于代码，只能测试开发人员做的对不对，而不能知道设计的正确与否，可能会漏掉一些功能需求；系统庞大时，测试开销会非常大。</p>
+<p><strong>22**</strong>、如何测试一个纸杯？**</p>
+<p>功能度：用水杯装水看漏不漏；水能不能被喝到</p>
+<p>安全性：杯子有没有毒或细菌</p>
+<p>可靠性：杯子从不同高度落下的损坏程度</p>
+<p>可移植性：杯子在不同的地方、温度等环境下是否都可以正常使用</p>
+<p>兼容性：杯子是否能够容纳果汁、白水、酒精、汽油等</p>
+<p>易用性：杯子是否烫手、是否有防滑措施、是否方便饮用</p>
+<p>用户文档：使用手册是否对杯子的用法、限制、使用条件等有详细描述</p>
+<p>疲劳测试：将杯子盛上水（案例一）放24小时检查泄漏时间和情况；盛上汽油（案例二）放24小时检查泄漏时间和情况等</p>
+<p>压力测试：用根针并在针上面不断加重量，看压强多大时会穿透</p>
+<p><strong>22**</strong>、测试计划工作的目的是什么？测试计划文档的内容应该包括什么？其中哪些是最重要的？**</p>
+<p>软件测试计划是指导测试过程的纲领性文件：</p>
+<ul>
+<li>领导能够根据测试计划进行宏观调控，进行相应资源配置等</li>
+<li>测试人员能够了解整个项目测试情况以及项目测试不同阶段的所要进行的工作等</li>
+<li>便于其他人员了解测试人员的工作内容，进行有关配合工作</li>
+</ul>
+<p>包含了产品概述、测试策略、测试方法、测试区域、测试配置、测试周期、测试资源、测试交流、风险分析等内容。借助软件测试计划，参与测试的项目成员，尤其是测试管理人员，可以明确测试任务和测试方法，保持测试实施过程的顺畅沟通，跟踪和控制测试进度，应对测试过程中的各种变更。</p>
+<p>测试计划编写6要素（5W1H）：</p>
+<ul>
+<li>why——为什么要进行这些测试；</li>
+<li>what—测试哪些方面，不同阶段的工作内容；</li>
+<li>when—测试不同阶段的起止时间；</li>
+<li>where—相应文档，缺陷的存放位置，<a href="http://baike.baidu.com/view/651482.htm" target="_blank" rel="noopener">测试环境</a>等；</li>
+<li>who—项目有关人员组成，安排哪些测试人员进行测试；</li>
+<li>how—如何去做，使用哪些<a href="http://baike.baidu.com/view/11808387.htm" target="_blank" rel="noopener">测试工具</a>以及测试方法进行测试</li>
+</ul>
+<p>测试计划和测试详细规格、测试用例之间是战略和战术的关系，测试计划主要从宏观上规划测试活动的范围、方法和资源配置，而测试详细规格、测试用例是完成测试任务的具体战术。所以其中最重要的是测试测试策略和测试方法（最好是能先评审）。</p>
+<p><strong>23**</strong>、黑盒测试的测试用例常见设计方法都有哪些？请分别以具体的例子来说明这些方法在测试用例设计工作中的应用。**</p>
+<p>1）等价类划分： 等价类是指某个输入域的子集合.在该子集合中,各个输入数据对于揭露程序中的错误都是等效的.并合理地假定:测试某等价类的代表值就等于对这一类其它值的测试.因此,可以把全部输入数据合理划分为若干等价类,在每一个等价类中取一个数据作为测试的输入条件,就可以用少量代表性的测试数据.取得较好的测试结果.等价类划分可有两种不同的情况:有效等价类和无效等价类.</p>
+<p>2）边界值分析法：是对等价类划分方法的补充。测试工作经验告诉我,大量的错误是发生在输入或输出范围的边界上,而不是发生在输入输出范围的内部.因此针对各种边界情况设计测试用例,可以查出更多的错误.</p>
+<p>使用边界值分析方法设计测试用例,首先应确定边界情况.通常输入和输出等价类的边界,就是应着重测试的边界情况.应当选取正好等于,刚刚大于或刚刚小于边界的值作为测试数据,而不是选取等价类中的典型值或任意值作为测试数据.</p>
+<p>3）错误猜测法：基于经验和直觉推测程序中所有可能存在的各种错误, 从而有针对性的设计测试用例的方法.</p>
+<p>错误推测方法的基本思想: 列举出程序中所有可能有的错误和容易发生错误的特殊情况,根据他们选择测试用例. 例如, 在单元测试时曾列出的许多在模块中常见的错误. 以前产品测试中曾经发现的错误等, 这些就是经验的总结. 还有, 输入数据和输出数据为0的情况. 输入表格为空格或输入表格只有一行. 这些都是容易发生错误的情况. 可选择这些情况下的例子作为测试用例.</p>
+<p>4）因果图方法：前面介绍的等价类划分方法和边界值分析方法,都是着重考虑输入条件,但未考虑输入条件之间的联系, 相互组合等. 考虑输入条件之间的相互组合,可能会产生一些新的情况. 但要检查输入条件的组合不是一件容易的事情, 即使把所有输入条件划分成等价类,他们之间的组合情况也相当多. 因此必须考虑采用一种适合于描述对于多种条件的组合,相应产生多个动作的形式来考虑设计测试用例. 这就需要利用因果图（逻辑模型）. 因果图方法最终生成的就是判定表. 它适合于检查程序输入条件的各种组合情况.</p>
+<p>5）正交表分析法：可能因为大量的参数的组合而引起测试用例数量上的激增，同时，这些测试用例并没有明显的优先级上的差距，而测试人员又无法完成这么多数量的测试，就可以通过正交表来进行缩减一些用例，从而达到尽量少的用例覆盖尽量大的范围的可能性。</p>
+<p>6）场景分析方法：指根据用户场景来模拟用户的操作步骤，这个比较类似因果图，但是可能执行的深度和可行性更好。 </p>
+<p>7）状态图法：通过输入条件和系统需求说明得到被测系统的所有状态，通过输入条件和状态得出输出条件；通过输入条件、输出条件和状态得出被测系统的测试用例。</p>
+<p>8）大纲法：大纲法是一种着眼于需求的方法，为了列出各种测试条件，就将需求转换为大纲的形式。大纲表示为树状结构，在根和每个叶子结点之间存在唯一的路径。大纲中的每条路径定义了一个特定的输入条件集合，用于定义测试用例。树中叶子的数目或大纲中的路径给出了测试所有功能所需测试用例的大致数量。</p>
+<p><strong>24**</strong>、详细的描述一个测试活动完整的过程**。（供参考，本答案主要是瀑布模型的做法）</p>
+<p>项目经理通过和客户的交流，完成需求文档，由开发人员和测试人员共同完成需求文档的评审，评审的内容包括：需求描述不清楚的地方和可能有明显冲突或者无法实现的功能的地方。项目经理通过综合开发人员，测试人员以及客户的意见，完成项目计划。然后SQA进入项目，开始进行统计和跟踪</p>
+<p>开发人员根据需求文档完成需求分析文档，测试人员进行评审，评审的主要内容包括是否有遗漏或双方理解不同的地方。测试人员完成测试计划文档，测试计划包括的内容上面有描述。</p>
+<p>测试人员根据修改好的需求分析文档开始写测试用例，同时开发人员完成概要设计文档，详细设计文档。此两份文档成为测试人员撰写测试用例的补充材料。</p>
+<p>测试用例完成后，测试和开发需要进行评审。</p>
+<p>测试人员搭建环境</p>
+<p>开发人员提交第一个版本，可能存在未完成功能，需要说明。测试人员进行测试，发现BUG后提交给BugZilla。</p>
+<p>开发提交第二个版本，包括Bug Fix以及增加了部分功能，测试人员进行测试。</p>
+<p>重复上面的工作，一般是3-4个版本后BUG数量减少，达到出货的要求。</p>
+<p>如果有客户反馈的问题，需要测试人员协助重现并重新测试。</p>
+<p><strong>26**</strong>、BUG<strong>**管理工具的跟踪过程（</strong>用BugZilla为例子）</p>
+<p>测试人员发现了BUG，提交到Bugzilla中，状态为new，BUG的接受者为开发接口人员</p>
+<p>开发接口将BUG分配给相关的模块的开发人员，状态修改为已分配，开发人员和测试确认BUG，如果是本人的BUG，则设置为接收；如果是别的开发人员的问题，则转发出去，由下一个开发人员来进行此行为；如果认为不是问题，则需要大家讨论并确认后，拒绝这个BUG，然后测试人员关闭此问题。</p>
+<p>如果开发人员接受了BUG，并修改好以后，将BUG状态修改为已修复，并告知测试在哪个版本中可以测试。</p>
+<p>测试人员在新版本中测试，如果发现问题依然存在，则拒绝验证；如果已经修复，则关闭BUG。</p>
+<p>2<strong>7**</strong>、您认为在测试人员同开发人员的沟通过程中，如何提高沟通的效率和改善沟通的效果？维持测试人员同开发团队中其他成员良好的人际关系的关键是什么？**</p>
+<p>尽量面对面的沟通，其次是能直接通过电话沟通，如果只能通过Email等非及时沟通工具的话，强调必须对特性的理解深刻以及能表达清楚。</p>
+<p>运用一些测试管理工具如TestDirector进行管理也是较有效的方法，同时要注意在TestDirector中对BUG有准确的描述。</p>
+<p>在团队中建立测试人员与开发人员良好沟通中注意以下几点：</p>
+<p>一真诚、二是团队精神、三是在专业上有共同语言、四是要对事不对人，工作至上</p>
+<p>当然也可以通过直接指出一些小问题，而不是进入BUG Tracking System来增加对方的好感。</p>
+<p><strong>28**</strong>、你对测试最大的兴趣在哪里？为什么？**</p>
+<p>回答这个面试题，没有固定统一的答案，但可能是许多企业都会问到的。提供以下答案供考：</p>
+<p>最大的兴趣，感觉这是一个有挑战性的工作；</p>
+<p>测试是一个经验行业，工作越久越能感觉到做好测试的难度和乐趣</p>
+<p>通过自己的工作，能使软件产品越来越完善，从中体会到乐趣</p>
+<p>回答此类问题注意以下几个方面：</p>
+<p>尽可能的切合招聘企业的技术路线来表达你的兴趣，例如该企业是数据库应用的企业，那么表示你的兴趣在数据库的测试，并且希望通过测试提升自己的数据库掌握能力。</p>
+<p>表明你做测试的目的是为了提升能力，也是为了更好的做好测试；提升能力不是为了以后转开发或其他的，除非用人企业有这样的安排。</p>
+<p>不要过多的表达你的兴趣在招聘企业的范畴这外。比如招聘企业是做财务软件的，可是你表现出来的是对游戏软件的兴趣；或招聘是做JAVA开发的，而你的兴趣是在C类语言程序的开发。</p>
+<p><strong>29**</strong>、你自认为测试的优势在哪里？**</p>
+<p>该面试也没有固定不变的答案，但可参考以下几点，并结合自身特点：</p>
+<p>有韧性、有耐心、做事有条理性、喜欢面对挑战、有信心做好每一件事情、较强的沟通能力、从以前的经理处都得到了很好的评价表明我做的很好</p>
+<p><strong>33**</strong>、简述你在以前的工作中做过哪些事情，比较熟悉什么**。参考答案如下。</p>
+<p>我过去的主要工作是系统测试和自动化测试。在系统测试中，主要是对BOSS系统的业务逻辑功能，以及软交换系统的Class 5特性进行测试。性能测试中，主要是进行的压力测试，在各个不同数量请求的情况下，获取系统响应时间以及系统资源消耗情况。自动化测试主要是通过自己写脚本以及一些第三方工具的结合来测试软交换的特性测试。</p>
+<p>在测试中，我感觉对用户需求的完全准确的理解非常重要。另外，就是对BUG的管理，要以需求为依据，并不是所有BUG均需要修改。</p>
+<p>测试工作需要耐心和细致，因为在新版本中，虽然多数原来发现的BUG得到了修复，但原来正确的功能也可能变得不正确。因此要注重迭代测试和回归测试。</p>
+<p><strong>34**</strong>、在C/C++<strong><strong>中static</strong></strong>有什么用途？（请至少说明两种）**<br>1)在函数体，一个被声明为静态的变量在这一函数被调用过程中维持其值不变。<br>2) 在模块内（但在函数体外），一个被声明为静态的变量可以被模块内所用函数访问，但不能被模块外其它函数访问。它是一个本地的全局变量。<br>3) 在模块内，一个被声明为静态的函数只可被这一模块内的其它函数调用。那就是，这个函数被限制在声明它的模块的本地范围内使用</p>
+<p><strong>35**</strong>、引用与指针有什么区别？**</p>
+<p>  1) 引用必须被初始化，指针不必。<br>  2) 引用初始化以后不能被改变，指针可以改变所指的对象。<br>  3) 不存在指向空值的引用，但是存在指向空值的指针。</p>
+<p><strong>36**</strong>、Internet<strong><strong>采用哪种网络协议？该协议的主要层次结构？Internet</strong></strong>物理地址和IP<strong>**地址转换采用什么协议？</strong></p>
+<p>TCP/IP协议主要层次结构为： 应用层/传输层/网络层/数链路层。</p>
+<p>ARP (Address Resolution Protocol)（地据址解析协议）</p>
+<p><strong>37**</strong>、说说你对集成测试中自顶向下集成和自底向上集成两个策略的理解，要谈出它们各自的优缺点和主要适应于哪种类型测试**；</p>
+<p>自顶向下集成</p>
+<p>优点：较早地验证了主要控制和判断点；按深度优先可以首先实现和验证一个完整的软件功能；功能较早证实，带来信心；只需一个驱动，减少驱动器开发的费用；支持故障隔离。</p>
+<p>缺点：柱的开发量大；底层验证被推迟；底层组件测试不充分。</p>
+<p>适应于产品控制结构比较清晰和稳定；高层接口变化较小；底层接口未定义或经常可能被修改；产口控制组件具有较大的技术风险，需要尽早被验证；希望尽早能看到产品的系统功能行为。</p>
+<p>2、自底向上集成</p>
+<p>优点：对底层组件行为较早验证；<a href="http://www.cnblogs.com/http:" target="_blank" rel="noopener">工作</a>最初可以并行集成，比自顶向下效率高；减少了桩的工作量；支持故障隔离。</p>
+<p>缺点：驱动的开发工作量大；对高层的验证被推迟，设计上的错误不能被及时发现。<br>适应于底层接口比较稳定；高层接口变化比较频繁；底层组件较早被完成。</p>
+<p><strong>38**</strong>、软件验收测试包括**正式验收测试、alpha测试、beta测试三种测试。 </p>
+<p><strong>39**</strong>、系统测试的策略**有很多种的，有性能测试、负载测试、强度测试、易用性测试、安全测试、配置测试、安装测试、文档测试、故障恢复测试、用户界面测试、恢复测试、分布测试、可用性测试。</p>
+<p><strong>40**</strong>、设计系统测试计划需要参考的项目文档有**软件测试计划、软件需求工件、和迭代计划</p>
+<p><strong>41**</strong>．通过画因果图来写测试用例的步骤为<strong><em>****、</em></strong><strong><strong>、___</strong></strong>、___<strong>**及把因果图转换为状态图共五个步骤。</strong> <strong>利用因果图生成测试用例的基本步骤是：</strong> </p>
+<p>§ 分析软件规格说明描述中，哪些是原因（即输入条件或输入条件的等价类），哪些是结果（即输出条件），并给每个原因和结果赋予一个标识符。</p>
+<p>§ 分析软件规格说明描述中的语义，找出原因与结果之间，原因与原因之间对应的是什么关系? 根据这些关系，画出因果图。 </p>
+<p>§ 由于语法或环境限制，有些原因与原因之间，原因与结果之间的组合情况不可能出现。为表明这些特殊情况，在因果图上用一些记号标明约束或限制条件。 § 把因果图转换成判定表。 </p>
+<p>§ 把判定表的每一列拿出来作为依据，设计测试用例。</p>
+<p><strong>43**</strong>、请说出这些测试最好由那些人员完成，测试的是什么？**</p>
+<p>代码、函数级测试一般由白盒测试人员完成，他们针对每段代码或函数进行正确性检验，检查其是否正确的实现了规定的功能。</p>
+<p>模块、组件级测试主要依据是程序结构设计测试模块间的集成和调用关系，一般由测试人员完成。</p>
+<p>系统测试在于模块测试与单元测试的基础上进行测试。了解系统功能与性能，根据测试用例进行全面的测试。</p>
+<p><strong>44**</strong>、** <strong>设计测试用例时应该考虑哪些方面，即不同的测试用例针对那些方面进行测试？</strong></p>
+<p>设计测试用例时需要注意的是，除了对整体流程及功能注意外，还要注意强度测试、性能测试、压力测试、边界值测试、稳定性测试、安全性测试等多方面。（测试用例需要考虑的四个基本要素是输入、输出、操作和测试环境；另外，测试用例需要考虑的是测试类型（功能、性能、安全……），这部分可以参照TP做答。此外，还需要考虑用例的重要性和优先级）</p>
+<p><strong>45**</strong>、** <strong>在windows**</strong>下保存一个文本文件时会弹出保存对话框，如果为文件名建立测试用例，等价类应该怎样划分？**</p>
+<p>单字节，如A；双字节， AA、我我；特殊字符 /‘。‘；、=-等；保留字，如com；文件格式为8.3格式的；文件名格式为非8.3格式的；/,,*等九个特殊字符。</p>
+<p><strong>46**</strong>、假设有一个文本框要求输入10<strong>**个字符的邮政编码，对于该文本框应该怎样划分等价类？</strong></p>
+<p>特殊字符，如10个*或￥；英文字母，如ABCDefghik；小于十个字符，如123；大于十个字符，如11111111111；数字和其他混合，如123AAAAAAA；空字符；保留字符</p>
+<p><strong>47.**</strong>软件测试项目从什么时候开始，？为什么？<br>**软件测试应该在需求分析阶段就介入,因为测试的对象不仅仅是程序编码,应该对软件开发过程中产生的所有产品都测试,并且软件缺陷存在放大趋势.缺陷发现的越晚,修复它所花费的成本就越大.</p>
+<p><strong>48**</strong>、什么是回归测试?**</p>
+<p>回归测试: (regression  testing): 回归测试有两类：用例回归和错误回归；用例回归是过一段时间以后再回头对以前使用过的用例在重新进行测试，看看会重新发现问题。错误回归，就是在新版本中，对以前版本中出现并修复的缺陷进行再次验证，并以缺陷为核心，对相关修改的部分进行测试的方法。</p>
+<p><strong>49.**</strong>单元测试、集成测试、系统测试的侧重点是什么？**<br> 单元测试针对的是软件设计的最小单元–程序模块（面向过程中是函数、过程；面向对象中是类。）,进行正确性检验的测试工作,在于发现每个程序模块内部可能存在的差错.一般有两个步骤:人工静态检查\动态执行跟踪<br> 集成测试针对的是通过了单元测试的各个模块所集成起来的组件进行检验,其主要内容是各个单元模块之间的接口,以及各个模块集成后所实现的功能.<br> 系统测试针对的是集成好的软件系统，作为整个计算机系统的一个元素,与计算机硬件\外设\某些支持软件\数据和人员等其他系统元素结合在一起,要在实际的运行环境中,对计算机系统进行一系列的集成测试和确认测试. </p>
+<p><strong>51.**</strong>一个测试工程师应具备那些素质？<br>**1、责任心2、沟通能力3、团队合作精神4、耐心、细心、信心5、时时保持怀疑态度，并且有缺陷预防的意识6、具备一定的编程经验</p>
+<p><strong>53**</strong>：你所了解的的软件测试类型都有哪些，简单介绍一下。**</p>
+<p>按测试策略分类：1、静态与动态测试2、黑盒与白盒测试 3、手工和自动测试 4、冒烟测试 5、回归测试；</p>
+<p>按测试阶段分类：单元测试、集成测试、系统测试；</p>
+<p>其他常见测试方法：1、功能测试 2、性能测试 3、压力测试 4、负载测试 5、易用性测试 6、安装测试 7、界面测试 8、配置测试 9、文档测试 10、兼容性测试 11、安全性测试 12、恢复测试</p>
+<p><strong>54**</strong>：你认为做好测试计划工作的关键是什么？**</p>
+<p>明确测试的目标，增强测试计划的实用性</p>
+<p>编写软件测试计划得重要目的就是使测试过程能够发现更多的软件缺陷，因此软件测试计划的价值取决于它对帮助管理测试项目，并且找出软件潜在的缺陷。因此，软件测试计划中的测试范围必须高度覆盖功能需求，测试方法必须切实可行，测试工具并且具有较高的实用性，便于使用，生成的测试结果直观、准确</p>
+<p>坚持“5W”规则，明确内容与过程</p>
+<p>“5W”规则指的是“What（做什么）”、“Why（为什么做）”、“When（何时做）”、“Where（在哪里）”、“How（如何做）”。利用“5W”规则创建软件测试计划，可以帮助测试团队理解测试的目的（Why），明确测试的范围和内容（What），确定测试的开始和结束日期（When），指出测试的方法和工具（How），给出测试文档和软件的存放位置（Where）。</p>
+<p>采用评审和更新机制，保证测试计划满足实际需求</p>
+<p>测试计划写作完成后，如果没有经过评审，直接发送给测试团队，测试计划内容的可能不准确或遗漏测试内容，或者软件需求变更引起测试范围的增减，而测试计划的内容没有及时更新，误导测试执行人员。</p>
+<p>分别创建测试计划与测试详细规格、测试用例</p>
+<p>应把详细的测试技术指标包含到独立创建的测试详细规格文档，把用于指导测试小组执行测试过程的测试用例放到独立创建的测试用例文档或测试用例管理数据库中。测试计划和测试详细规格、测试用例之间是战略和战术的关系，测试计划主要从宏观上规划测试活动的范围、方法和资源配置，而测试详细规格、测试用例是完成测试任务的具体战术。</p>
+<p><strong>55**</strong>：您认为做好测试用例设计工作的关键是什么？**</p>
+<p>白盒测试用例设计的关键是以较少的用例覆盖尽可能多的内部程序逻辑结果</p>
+<p>黑盒法用例设计的关键同样也是以较少的用例覆盖模块输出和输入接口。不可能做到完全测试，以最少的用例在合理的时间内发现最多的问题 </p>
+<p><strong>56**</strong>：你的测试职业发展目标是什么？**</p>
+<p>测试经验越多，测试能力越高。所以我的职业发展是需要时间累积的，一步步向着高级测试工程师奔去。而且我也有初步的职业规划，前3年累积测试经验，不断的更新自己改正自己，做好测试任务。</p>
+<p><strong>57**</strong>：测试结束的标准是什么？**</p>
+<p>从微观上来说，在测试计划中定义，比如系统在一定性能下平稳运行72小时，目前Bug Tracking System中，本版本中没有一般严重的BUG，普通BUG的数量在3以下，BUG修复率90%以上等等参数，然后由开发经理，测试经理，项目经理共同签字认同版本Release。</p>
+<p>如果说宏观的，则是当这个软件彻底的消失以后，测试就结束了。</p>
+<p><strong>59**</strong>、一套完整的测试应该由哪些阶段组成？**<br>可行性分析、需求分析、概要设计、详细设计、编码、单元测试、集成测试、系统测试、验收测试</p>
+<p><strong>61**</strong>、您是否了解以往所工作的企业的软件开发过程？如果了解，请试述一个完整的开发过程需要完成哪些工作？分别由哪些不同的角色来完成这些工作？您在以往的测试工作中都曾经具体从事过哪些工作？其中最擅长哪部分工作？**</p>
+<p>开发过程—需求调研（需求人员）、需求分析（需求人员）、概要设计（设计人员）、详细设计(设计人员)、编码（开发人员）</p>
+<p>测试过程—需求评审、系统测试设计、概要设计评审、集成测试设计、详细设计评审、单元测试设计、测试执行</p>
+<p>测试工作的整个过程都做过，擅长做测试设计</p>
+<p>过程决定质量，软件的过程改进正是为了提高软件的质量，将过往的种种经验教训积累起来。</p>
+<p><strong>62**</strong>、测试用例设计的原则是什么？目前主要的测试用例设计方法有哪些？**</p>
+<p>代表性：能够代表并覆盖各种合理的和不合理、合法的和非法的、边界的和越界的、以及极限的输入数据、操作和环境设置等.</p>
+<p>可判定性：即测试执行结果的正确性是可判定的，每一个测试用例都应有相应的期望结果.</p>
+<p>可再现性：即对同样的测试用例，系统的执行结果应当是相同的。</p>
+<p>方法有等价类、边界值、因果图、状态图、正交法、大纲法</p>
+<p><strong>63**</strong>、面向对象的测试用例设计有几种方法？如何实现？**</p>
+<p>给类中的每个构造函数设计一组测试用例</p>
+<p>组合类中的类变量、实例变量</p>
+<p>组合类中的各种方法</p>
+<p>根据前置条件和后置条件设计测试用例</p>
+<p>根据代码设计测试用例</p>
+<p><strong>64**</strong>、LoadRunner<strong>**分为哪三个模块？请简述各模块的主要功能。</strong></p>
+<p>Virtual User Generator：用于录制脚步</p>
+<p>Mercury LoadRunner Controller：用于创建、运行和监控场景</p>
+<p>Mercury LoadRunner Analysis：用于分析测试结果</p>
+<p><strong>65**</strong>、你对测试最大的兴趣在哪里？为什么？**</p>
+<p>最大的兴趣就是测试有难度，有挑战性！做测试越久越能感觉到做好测试有多难。曾经在无忧测试网上看到一篇文章，是关于如何做好一名测试工程师。一共罗列了11，12点，有部分是和人的性格有关，有部分需要后天的努力。但除了性格有关的1，2点我没有把握，其他点我都很有信心做好它。</p>
+<p>刚开始进入测试行业时，对测试的认识是从无忧测试网上了解到的一些资料，当时是冲着做测试需要很多技能才能做的好，虽然入门容易，但做好很难，比开发更难，虽然当时我很想做开发（学校专业课我基本上不缺席，因为我喜欢我的专业），但看到测试比开发更难更有挑战性，想做好测试的意志就更坚定了。</p>
+<p>我觉得做测试整个过程中有2点让我觉得很有难度（对我来说，有难度的东西我就非常感兴趣），第一是测试用例的设计，因为测试的精华就在测试用例的设计上了，要在版本出来之前，把用例写好，用什么测试方法写？（也就是测试计划或测试策略），如果你刚测试一个新任务时，你得花一定的时间去消化业务需求和技术基础，业务需求很好理解（多和产品经理和开发人员沟通就能达到目的），而技术基础可就没那么简单了，这需要你自觉的学习能力，比如说网站吧，最基本的技术知识你要知道网站内部是怎么运作的的，后台是怎么响应用户请求的？测试环境如何搭建？这些都需要最早的学好。至少在开始测试之前能做好基本的准备，可能会遇到什么难题？需求细节是不是没有确定好？这些问题都能在设计用例的时候发现。</p>
+<p>第二是发现BUG的时候了，这应该是测试人员最基本的任务了，一般按测试用例开始测试就能发现大部分的bug，还有一部分bug需要测试的过程中更了解所测版本的情况获得更多信息，补充测试用例，测试出bug。还有如何发现bug？这就需要在测试用例有效的情况下，通过细心和耐心去发现bug了，每个用例都有可能发现bug，每个地方都有可能出错，所以测试过程中思维要清晰（测试过程数据流及结果都得看仔细了，bug都在里面发现的）。如何描述bug也很有讲究，bug在什么情况下会产生，如果条件变化一点点，就不会有这个bug，以哪些最少的操作步骤就能重现这个bug，这个bug产生的规律是什么？如果你够厉害的话，可以帮开发人员初步定位问题。</p>
+<p><strong>66**</strong>、您所熟悉的软件测试类型都有哪些？请试着分别比较这些不同的测试类型的区别与联系（如功能测试、性能测试……）<br>**　　测试类型有：功能测试，性能测试，界面测试。<br>　　功能测试在测试工作中占的比例最大，功能测试也叫黑盒测试。是把测试对象看作一个黑盒子。利用黑盒测试法进行动态测试时，需要测试软件产品的功能，不需测试软件产品的内部结构和处理过程。采用黑盒技术设计测试用例的方法有：等价类划分、边界值分析、错误推测、因果图和综合策略。<br>　　性能测试是通过自动化的测试工具模拟多种正常、峰值以及异常负载条件来对系统的各项性能指标进行测试。负载测试和压力测试都属于性能测试，两者可以结合进行。通过负载测试，确定在各种工作负载下系统的性能，目标是测试当负载逐渐增加时，系统各项性能指标的变化情况。压力测试是通过确定一个系统的瓶颈或者不能接收的性能点，来获得系统能提供的最大服务级别的测试。<br>　　界面测试，界面是软件与用户交互的最直接的层，界面的好坏决定用户对软件的第一印象。而且设计良好的界面能够引导用户自己完成相应的操作，起到向导的作用。同时界面如同人的面孔，具有吸引用户的直接优势。设计合理的界面能给用户带来轻松愉悦的感受和成功的感觉，相反由于界面设计的失败，让用户有挫败感，再实用强大的功能都可能在用户的畏惧与放弃中付诸东流。<br>　　区别在于，功能测试关注产品的所有功能上，要考虑到每个细节功能，每个可能存在的功能问题。性能测试主要关注于产品整体的多用户并发下的稳定性和健壮性。界面测试更关注于用户体验上，用户使用该产品的时候是否易用，是否易懂，是否规范（快捷键之类的），是否美观（能否吸引用户的注意力），是否安全（尽量在前台避免用户无意输入无效的数据，当然考虑到体验性，不能太粗鲁的弹出警告）？做某个性能测试的时候，首先它可能是个功能点，首先要保证它的功能是没问题的，然后再考虑该功能点的性能测试</p>
+<p><strong>67**</strong>、请试着比较一下黑盒测试、白盒测试、单元测试、集成测试、系统测试、验收测试的区别与联系。<br>**　　黑盒测试：已知产品的功能设计规格，可以进行测试证明每个实现了的功能是否符合要求。<br>　　白盒测试：已知产品的内部工作过程，可以通过测试证明每种内部操作是否符合设计规格要求，所有内部成分是否以经过检查。<br>　　软件的黑盒测试意味着测试要在软件的接口处进行。这种方法是把测试对象看做一个黑盒子，测试人员完全不考虑程序内部的逻辑结构和内部特性，只依据程序的需求规格说明书，检查程序的功能是否符合它的功能说明。因此黑盒测试又叫功能测试或数据驱动测试。黑盒测试主要是为了发现以下几类错误：<br>　　1、是否有不正确或遗漏的功能？2、在接口上，输入是否能正确的接受？能否输出正确的结果？3、是否有数据结构错误或外部信息（例如数据文件）访问错误？4、性能上是否能够满足要求？5、是否有初始化或终止性错误？<br>　　软件的白盒测试是对软件的过程性细节做细致的检查。这种方法是把测试对象看做一个打开的盒子，它允许测试人员利用程序内部的逻辑结构及有关信息，设计或选择测试用例，对程序所有逻辑路径进行测试。通过在不同点检查程序状态，确定实际状态是否与预期的状态一致。因此白盒测试又称为结构测试或逻辑驱动测试。白盒测试主要是想对程序模块进行如下检查：<br>　　1、对程序模块的所有独立的执行路径至少测试一遍。<br>　　2、对所有的逻辑判定，取“真”与取“假”的两种情况都能至少测一遍。<br>　　3、在循环的边界和运行的界限内执行循环体。<br>　　4、测试内部数据结构的有效性，等等。<br>　　单元测试（模块测试）是开发者编写的一小段代码，用于检验被测代码的一个很小的、很明确的功能是否正确。通常而言，一个单元测试是用于判断某个特定条件（或者场景）下某个特定函数的行为。<br>　　单元测试是由程序员自己来完成，最终受益的也是程序员自己。可以这么说，程序员有责任编写功能代码，同时也就有责任为自己的代码编写单元测试。执行单元测试，就是为了证明这段代码的行为和我们期望的一致。<br>　　集成测试（也叫组装测试，联合测试）是单元测试的逻辑扩展。它的最简单的形式是：两个已经测试过的单元组合成一个组件，并且测试它们之间的接口。从这一层意义上讲，组件是指多个单元的集成聚合。在现实方案中，许多单元组合成组件，而这些组件又聚合成程序的更大部分。方法是测试片段的组合，并最终扩展进程，将您的模块与其他组的模块一起测试。最后，将构成进程的所有模块一起测试。<br>　　系统测试是将经过测试的子系统装配成一个完整系统来测试。它是检验系统是否确实能提供系统方案说明书中指定功能的有效方法。（常见的联调测试）<br>　　系统测试的目的是对最终软件系统进行全面的测试，确保最终软件系统满足产品需求并且遵循系统设计。<br>　　验收测试是部署软件之前的最后一个测试操作。验收测试的目的是确保软件准备就绪，并且可以让最终用户将其用于执行软件的既定功能和任务。<br>验收测试是向未来的用户表明系统能够像预定要求那样工作。经集成测试后，已经按照设计把所有的模块组装成一个完整的软件系统，接口错误也已经基本排除了，接着就应该进一步验证软件的有效性，这就是验收测试的任务，即软件的功能性能如同用户所合理期待的那样。</p>
+<p><strong>68**</strong>、当开发人员说不是BUG***<em>时，你如何应付？<br>*</em>　　开发人员说不是bug，有2种情况，一是需求没有确定，所以我可以这么做，这个时候可以找来产品经理进行确认，需不需要改动，3方商量确定好后再看要不要改。二是这种情况不可能发生，所以不需要修改，这个时候，我可以先尽可能的说出是BUG的依据是什么？如果被用户发现或出了问题，会有什么不良结果？程序员可能会给你很多理由，你可以对他的解释进行反驳。如果还是不行，那我可以给这个问题提出来,跟开发经理和测试经理进行确认,如果要修改就改,如果不要修改就不改。其实有些真的不是bug，我也只是建议的方式写进TD中，如果开发人员不修改也没有大问题。如果确定是bug的话，一定要坚持自己的立场，让问题得到最后的确认。</p>
+<p><strong>69**</strong>、为什么要在一个团队中开展软件测试工作？**</p>
+<p>因为没有经过测试的软件很难在发布之前知道该软件的质量，就好比ISO质量认证一样，测试同样也需要质量的保证，这个时候就需要在团队中开展软件测试的工作。在测试的过程发现软件中存在的问题，及时让开发人员得知并修改问题，在即将发布时，从测试报告中得出软件的质量情况。</p>
+<p><strong>71**</strong>、一份测试计划应该包括哪些内容？**</p>
+<p>背景、项目简介、目的、测试范围、测试策略、人员分工、资源要求、进度计划、参考文档、常用术语、提交文档、风险分析。</p>
+<p><strong>72**</strong>、针对于软件的行业背景，你如何理解软件的业务？**</p>
+<p>阅读用户手册了解软件的功能和操作流程；看一些业务的专业书籍补充业务知识；如果有用户实际的数据，可以拿实际的数据进行参考；参考以前的用例和BUG报告；在使用软件的过程中多思考；多与产品经理交流。</p>
+<p><strong>74**</strong>、如何定位测试用例的作用？**</p>
+<p>组织性：编写、组织性、功能覆盖、重复性、跟踪、测试确认</p>
+<p><strong>76**</strong>、什么是兼容性测试？请举例说明如何利用兼容性测试列表进行测试。** </p>
+<p>主要验证软件产品在不同版本之间的兼容性。包括向下兼容和交错兼容，向下兼容是测试软件新版本保留它早期版本功能的情况，交错兼容是验证共同存在的两个相关但不相同的产品之间的兼容性。</p>
+<p><strong>77**</strong>、对某软件进行测试，发现在WIN98<strong>**上运行得很慢，怎么判别是该软件存在问题还是其软硬件运行环境存在问题？</strong></p>
+<p>看软件的运行环境要求。如果符合要求则是程序存在问题，若不符合要求则是硬件系统存在问题</p>
+<p><strong>78**</strong>、需求测试的注意事项有哪些？**</p>
+<p>是否使用了公司的模板、文档内容是否符合规范、所有的需求是分级是否清析适当、所有的需求是否具有一致性、需求是否可行（即，该需求组合有解决方案）、需求可否用己知的约束来实现、需求是否足够（即，可以把它送到一个规范的开发组织，并有一个生产出所需要产品的合理的可能性）、所有的其它需求是交叉引用是否正确、用户描述是否清楚、是否用客户的语言来描述需求、每个需求描述是否清楚没有岐义，可以移交给一个独立的组去实现时也能理解、是否所有的需求都是可验证的、是否每条需求都具有独立性，即使发生了变化也不会影响其它需求、性能指标是否明确、非功能性需求是否得到充分表现、是否完整列出适用的标准或协议、标准和协议之间是否存在冲突</p>
+<p><strong>81**</strong>、主键、外键的作用，索引的优点与不足?** </p>
+<p>　　答：主键：是表中的唯一标示键。作用：保证实体的完整性;加快数据库的操作速度;增加新的表记录时，数据库会自动检索新记录的主键值，不允许该值与其他表中记录的主键重复;数据库会按主键值的顺序显示记录，如果没有设定主键，则按输入的顺序显示记录。 </p>
+<p>　　外键：是主键的从属，表示了两个表之间的联系。作用：使用外键可以避免冗余。 </p>
+<p>索引的优点： 1、通过创建唯一性的索引，可以保证表中数据的唯一性; 2、加速数据的检索速度; 3、加快表与表之间的连接; 4、在使用分组与排序数据检索时，可以显著检索分组与排序的时间; 5、在查询的过程中使用优化隐藏器，提供系统性能。 </p>
+<p>缺点： 1、创建索引需要时间，且随着数据量的增加而增加; 2、索引需要占用物理空间; </p>
+<p>​    3、当对表中数据进行修改时，索引也要动态维护，降低了数据的维护速度。</p>
+<p><strong>84**</strong>、性能测试的流程?** </p>
+<p>　　1.测试需求分析2.测试计划制定与评审3.测试用例设计与开发4.测试执行与监控5.分析测试结果6.编写性能测试报告7.测试经验总结</p>
+<p><strong>88**</strong>、简述bug<strong>**的生命周期?</strong></p>
+<p>　　1， 有效地记录BUG 2， 使用BUG模板 3， 评价BUG优先级和严重性 4， BUG的生命 5， 维护BUG数据库</p>
+<p><strong>89**</strong>、缺陷记录应包含的内容?** </p>
+<p>　　缺陷标识、缺陷类型、缺陷严重程度、缺陷产生可能性、缺陷优先级、缺陷状态、缺陷起源、缺陷来源、缺陷原因; </p>
+<p><strong>91</strong> <strong>您所熟悉的软件测试类型都有哪些?**</strong>请试着分别比较这些不同的测试类型的区别与联系(<strong>**如功能测试、性能测试……)</strong> </p>
+<p>　　易用性测试-界面的友好性，操作方便性等。 </p>
+<p>　　功能测试-系统中功能性需求的满足 </p>
+<p>　　安全性测试-系统是否存在安全隐患和漏洞 </p>
+<p>　　性能测试-系统在大并发下的响应速度和健壮性</p>
+<p><strong>93**</strong>、您认为做好测试计划工作的关键是什么?** </p>
+<p>　　了解项目或系统的业务需求 </p>
+<p>　　和项目经理协调好，了解项目的进度计划安排情况 </p>
+<p><strong>95**</strong>您认为做好测试用例设计工作的关键是什么?**</p>
+<p>　　对业务和软件需求非常清楚，可以根据需求不同选择不同的测试用例设计</p>
+<p><strong>96**</strong>、.<strong><strong>您以往的工作中是否曾开展过测试用例的评审工作?</strong></strong>如果有，请描述测试用例评审的过程和评审的内容**。 </p>
+<p>　　评审计划-&gt;预审-&gt;评审; </p>
+<p>　　评审内容主要是测试用例对软件需求的覆盖程度，对于相关边界是否考虑，是否针对复杂流程准备多套测试数据，是否有专门针对非功能性需求的测试。 </p>
+<p><strong>98.您认为性能测试工作的目的是什么?做好性能测试工作的关键是什么?</strong> </p>
+<p>　　关键是测试脚本的录制，测试时候测试环境的干净。 </p>
+<p><strong>100、.您以往所从事的软件测试工作中，是否使用了一些工具来进行软件缺陷(Bug)的管理?如果有，请结合该工具描述软件缺陷(Bug)跟踪管理的流程。</strong> </p>
+<p>　　CQ，也可以使用BugFree等免费工具。 </p>
+<p><strong>101、.您如何看待软件过程改进?在您曾经工作过的企业中，是否有一些需要改进的东西呢?您期望的理想的测试人员的工作环境是怎样的?</strong> </p>
+<p>　　将先进的经验或思想固化到过程中，通过过程改进和能力提高来改进软件质量。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2020/05/13/%E6%B1%BD%E8%BD%A6%E9%9B%B6%E9%83%A8%E4%BB%B6%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -905,361 +1948,11 @@ edge_n = imfilter(I,N,<span class="string">'symmetric'</span>,<span class="strin
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2019/10/24/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zyx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome to my Blog-Zzzzzz">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/24/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2/" class="post-title-link" itemprop="url">图像分割</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-24 19:16:39" itemprop="dateCreated datePublished" datetime="2019-10-24T19:16:39+08:00">2019-10-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-07-30 17:37:03" itemprop="dateModified" datetime="2019-07-30T17:37:03+08:00">2019-07-30</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>图像分割</p>
-<ul>
-<li><p>豪格变换（Hough) ：图像像素信息按坐标映射到参数空间的方法。（圆、直线）</p>
-</li>
-<li><p>核心思想：</p>
-<ul>
-<li>确定要识别的曲线解析集，即在一定精度上枚举带参数的解析式中所有参数的可能取值。</li>
-<li>为解析式集中的每个元素构造计数器</li>
-<li>遍历图像中的的所有有效像素，并将每个有效像素的坐标依次代入解析式集中的每个元素，若解析式成立，则将该解析式对应的计数器加1</li>
-<li>设定阈值t,遂于计数器值大于t的解析式，可认为其对应的曲线被识别</li>
-</ul>
-</li>
-<li><p>算法：</p>
-<ul>
-<li>利用hough()函数执行Hough变换，得到Hough矩阵。</li>
-<li>利用houghpeaks()函数在Hough矩阵中寻找到峰值点。</li>
-<li>利用houghlines()函数在之前两步结果的基础上得到原二值图像中的直线信息。</li>
-</ul>
-</li>
-<li><p>轮廓跟踪</p>
-<ul>
-<li><p>区域表示：</p>
-<ul>
-<li>轮廓表示法-&gt;链码表：链码；链码寻址</li>
-<li>线段表示法-&gt;线段表</li>
-<li>链码表转化成线段表：<ul>
-<li>顺序检测链码表，根据链码表提取轮廓中的左端点，右端点喝奇异点，并存入线段中。其中奇异点提取两次。</li>
-<li>将线段表中的所有点按照纵坐标排序</li>
-<li>将纵坐标相同的所有点按照横坐标排序</li>
-</ul>
-</li>
-<li>区域的形状参数：F=L^2/（4<em>pi</em>S)     L:周长    S：面积</li>
-</ul>
-</li>
-<li><p>单区域追踪</p>
-<ul>
-<li><p>轮廓方向： 正方向：沿着此方向前进时，区域的内部总是处于轮廓的右边。</p>
-</li>
-<li><p>搜素下一边界点过程描述：</p>
-<ul>
-<li>获得上一边界点到当前边界点的链码</li>
-<li>将链码加4反向再减1，并以此链码为起点对邻域进行搜索</li>
-<li>获得下一边界点并返回下一边界点相对当前点的链码</li>
-</ul>
-</li>
-<li><p>单区域的轮廓跟踪的过程</p>
-<ul>
-<li>以当前轮廓点为中心在领域内搜索下一轮廓点</li>
-<li>获得下一轮廓点的链码并保存在链码表中</li>
-<li>若下一轮廓点为起始点，则轮廓跟踪完成；否则，将当前点移动到下一轮廓点并重复步骤1，2</li>
-</ul>
-</li>
-<li><p>多区域跟踪</p>
-<ul>
-<li>搜素哦起始点并确定起始方向链码</li>
-<li>单区域轮廓跟踪</li>
-<li>绘制区域轮廓</li>
-<li>区域填充</li>
-</ul>
-</li>
-<li><p>编码实现</p>
-<ul>
-<li><p>B= bwtraceboundary( BW, P, fstep,conn, N, dir)</p>
-<p>(BW  为二值图像)</p>
-</li>
-</ul>
-</li>
-<li><p>区域填充</p>
-<ul>
-<li>以一组种子点为开始，将与种子性质相似的像素附加到生长区域的每个种子上。</li>
-<li>图像的区域即相互连通的颜色相近的像素集合，区域的填充就是将区域内的像素设定为指定的颜色。</li>
-<li>种子算法：填充区域的过程中不关心区域的形状，二十通过获得区域内部的任意一个像素，并以这个像素为种子，不断扩大填充的面积，最终覆盖整个填充区域。</li>
-<li>关键：①连通像素的搜素②边界判断<ul>
-<li>连通像素的判断：<ul>
-<li>区域生长技术：单连接区域生长</li>
-</ul>
-</li>
-<li>容差：颜色相近的两个像素间的两个像素间的最大颜色误差</li>
-</ul>
-</li>
-<li>递归法：从一点出发，按照方向编码用递归的方式遍历填充区域，每到达一个像素就按照方向编码依次判断它相邻的每个像素是否该被填充。</li>
-<li>漫水法：<ul>
-<li>选取一个起始种子点，获得基准颜色，将种子点压入堆栈</li>
-<li>从堆栈中取得一个像素，对其进行填充，然后搜素哦四邻域或者八邻域，如果有需要填充的像素，就压入栈中。</li>
-<li>重复步骤二，直至堆栈为空。</li>
-</ul>
-</li>
-<li>行扫描法<ul>
-<li>选取一个起始种子点，获得基准颜色，将种子点压入堆栈</li>
-<li>从堆栈中取出一个像素，依次对该像素的左右连通像素进行填充，并在填充过程中判断每个填充位置上下两行中相邻像素是否需要被填充，将需要填充的相邻像素压入堆栈</li>
-<li>对堆栈中的像素进行检查，去除已被填充的像素</li>
-<li>重复步骤二，三，直至堆栈为空</li>
-</ul>
-</li>
-<li>混合连接区域生长法：两个节点的相似性判断依赖与它们各自邻域是否满足某种条件。</li>
-<li>中心连接区域生长法：物体中同一区域的各像素的灰度级不会发生较大差异。从满足相似性的准则的点开始，在各个方向上进行区域生长。假设P是已经接受的一小块区域，则检测它的全部邻接点像素，若该点满足预置的相似性准则，则将其加入区域P中，变成P’，对于P’重复以上过程，直至达到终止条件为止。</li>
-<li>编程实现：BW2 = imfill(BW)//填充空洞</li>
-<li>J = roifill(I,c,r)//实现对指定的感兴趣区域进行填充</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>区域分裂与合并</p>
-<ul>
-<li><p>从图像金字塔或者四叉树数据结构的任一中间层开始，根据给定的均匀性检验准则进行分裂或者合并操作，并以此来逐步改善区域划分的性能，直到最后将图像分成数量最少的均匀区域为止。</p>
-</li>
-<li><p>算法描述：</p>
-<ul>
-<li>确定均匀性测试准则P， 将原始图像构造成四叉树数据结构</li>
-<li>将图像四叉树结构中的某一中间层作为初始的区域进行划分。对于任何区域Ai，如果P(Ai)=FALSE，则将每个区域都拆分为成4个相连的象限区域。如果任意1/4子区域Bi也满足P(Bi)=FALSE,那么就再将该子区一分为四。</li>
-<li>对于任意两个相邻的区域满足P(A1UA2)=TURE,则将他们合并成一个区域。</li>
-<li>重复上述操作，当无法再进行分裂与合并时停止操作</li>
-</ul>
-</li>
-<li><p>均方误差最小测试准则：定义某个区域上的方差，方差最小即为ture</p>
-</li>
-<li><p>编程相关：</p>
-<ul>
-<li><p>四叉树分解： S = qtdecomp(I, threshold, [mindim maxdim])</p>
-<p>I:灰度图像，threshold:阈值，适用于正方形图像</p>
-</li>
-<li><p>获得四叉树分解后所有指定大小的子块像素及位置信息：</p>
-<p>[vals, r, c] = qtgetblk(I, S, dim)</p>
-<p>I:灰度图像，dim指定子块的大小</p>
-</li>
-<li><p>将四叉树分解所得到的子块中符合条件的部分全部替换成指定的子块：J = qtsetblk(I, S, dim, vals)</p>
-</li>
-<li></li>
-</ul>
-</li>
-</ul>
-<p>水域分割（分水岭算法）</p>
-<ul>
-<li>水域合并规则：<ul>
-<li>如果新的水域与若干浅水域相连，则将这些浅水域合并到新的水域</li>
-<li>如果新的水域与若干小水域相连，则将这些小水域合并成新的水域</li>
-<li>如果新的水域与若干深水域相邻，则选择平均深度最浅的一个进行合并</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://zyx1105.github.io/2019/10/24/%E6%AD%A3%E4%BA%A4%E5%8F%98%E6%8D%A2%20%E4%B8%8E%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Zyx">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome to my Blog-Zzzzzz">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/24/%E6%AD%A3%E4%BA%A4%E5%8F%98%E6%8D%A2%20%E4%B8%8E%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9/" class="post-title-link" itemprop="url">正交变换 与图像压缩</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-24 19:16:39" itemprop="dateCreated datePublished" datetime="2019-10-24T19:16:39+08:00">2019-10-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-08-04 18:07:26" itemprop="dateModified" datetime="2019-08-04T18:07:26+08:00">2019-08-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>正交变换 与图像压缩</p>
-<p>傅里叶变换</p>
-<ul>
-<li><p>时域连续—&gt;频域非周期</p>
-</li>
-<li><p>时域的非周期—&gt;频域连续</p>
-</li>
-</ul>
-<p>​                         </p>
-<p>图像的频率—&gt;图像中灰度变化的剧烈程度的指标。</p>
-<p>傅里叶频谱图上看到的亮点实际是图像上某一点与领域点差异的强弱，即梯度的大小。梯度大，亮度强。</p>
-<p>快速傅里叶变换（FFT)：</p>
-<ul>
-<li>蝶形算法</li>
-</ul>
-<p>码位倒序：将十进制转换成二进制，然后将二进制的序列倒序重排，再将颠倒顺序后的二进制转换成十进制。</p>
-<p>编程实现FFT：</p>
-<ul>
-<li>正变换：Y = fft2(X, m,  n):X-&gt;的输入图像;m,n—&gt;第一维到第二维规整到指定的长度；abs(Y) —&gt;幅度谱；angle(Y)—&gt;相位谱</li>
-<li>逆变换：Y = ifft2(X,m , n)</li>
-</ul>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">'C:\Users\Administrator\Desktop\lena.jpg'</span>);</span><br><span class="line">I1 = rgb2gray(I);</span><br><span class="line">fcoef = fft2(double(I1));<span class="comment">%进行快速傅里叶变换</span></span><br><span class="line"> tmp1 = <span class="built_in">log</span>(<span class="number">1</span>+<span class="built_in">abs</span>(fcoef));<span class="comment">%傅里叶变换的幅度值范围大到不合适在屏幕上显示，</span></span><br><span class="line"> <span class="comment">%为了在屏幕上凸显出高低变化的连续性，可以用对数尺度来替换线性尺度，为了确保大于0，故＋1处理</span></span><br><span class="line"> spectrum = fftshift(fcoef);<span class="comment">%将频谱图移到图像的中心</span></span><br><span class="line"> tmp2 = <span class="built_in">log</span>(<span class="number">1</span>+<span class="built_in">abs</span>(spectrum));</span><br><span class="line"> ifcoef = ifft2(fcoef);<span class="comment">%逆变换，只有对复数矩阵进行逆变换，才可以恢复原图</span></span><br><span class="line"> <span class="built_in">figure</span>                            <span class="comment">%显示处理结果</span></span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>), imshow(I1), title(<span class="string">'source image'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>), imshow(tmp1,[]), title(<span class="string">'FFT image'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>), imshow(tmp2,[]), title(<span class="string">'shift FFT image'</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>), imshow(ifcoef,[]), title(<span class="string">'IFFT image'</span>);</span><br></pre></td></tr></table></figure>
-
-
-
-<p>离散余弦变换（DCT)</p>
-<p>：空间域的低通滤波器，在傅里叶级数展开式中，如果被展开的函数是实偶函数，则其傅里叶级数中只含有余弦项，再将其离散化，由此可导出离散余弦变换。</p>
-<p>JPEG编码：图像分解成8x8,16x16的子块，并对每一个子块进行单独的DCT变换，然后对变换结果进行量化、编码等处理。</p>
-<p>快读离散余弦变换（ANN）：</p>
-<p>缺点：对高质量图像的影响比低质量图像要大</p>
-<p>优点：极大的减少了计算量，效率可观。</p>
-<p>编程：</p>
-<p>正变换：B = dct2(A, m  ,  n,)</p>
-<p>逆变换：A = idct2(B);</p>
-<p>D = dctmtx(n);  返回一个n x n 的DCT变换矩阵；D * A就是A矩阵每一列的DCT变换值，D’*A为A的每一列的DCT反变换。</p>
-<p>dct2(A)=D<em>A</em>D’;</p>
-<p>利用DCT来进行图像压缩：</p>
-<p>分块—&gt;正变换—&gt;过滤—&gt;逆变换</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">'C:\Users\Administrator\Desktop\lena.jpg'</span>);</span><br><span class="line">I = rgb2gray(I);<span class="comment">%针对灰度图像</span></span><br><span class="line">I = im2double(I);</span><br><span class="line">T = dctmtx(<span class="number">8</span>);</span><br><span class="line">dct = @(block_struct) T * block_struct.data * T';<span class="comment">%写定对每一块的计算方法</span></span><br><span class="line">B = blockproc(I,[<span class="number">8</span> <span class="number">8</span>],dct);<span class="comment">%对I，进行【8，8】的分块处理，同时每一块执行dct的计方法</span></span><br><span class="line">mask = [<span class="number">1</span>   <span class="number">1</span>   <span class="number">1</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">1</span>   <span class="number">1</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">1</span>   <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">1</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span></span><br><span class="line">        <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>   <span class="number">0</span>];</span><br><span class="line">        <span class="comment">%滤波矩阵，即只对左上角的变换后进行保留</span></span><br><span class="line">B2 = blockproc(B,[<span class="number">8</span> <span class="number">8</span>],@(block_struct) mask .* block_struct.data);</span><br><span class="line">invdct = @(block_struct) T' * block_struct.data * T;</span><br><span class="line">I2 = blockproc(B2,[<span class="number">8</span> <span class="number">8</span>],invdct);<span class="comment">%对逆变换后的I，进行逆变换，获得压缩后的原图形</span></span><br><span class="line">imshow(I), <span class="built_in">figure</span>, imshow(I2)</span><br></pre></td></tr></table></figure>
-
-<p>沃尔什-哈达玛变换—图像信息压缩</p>
-<ul>
-<li>按沃尔什排列的沃尔什函数</li>
-<li>按佩利排列的沃尔什函数</li>
-<li>按哈达玛排列的沃尔什函数</li>
-</ul>
-<p>—&gt;蝶形运算</p>
-<p>编程：</p>
-<p><code>Y = fwht(X,n,ordering);</code></p>
-<p> X：一维信号，n: Y的大小； ordering：排列顺序</p>
-<p>处理图像时，考虑<code>H = hadamard(n);</code> 返回值为输出的变换核矩阵。</p>
-<p><code>B = blockproc(A,[M,N], fun);</code></p>
-<p>将矩阵A分成【MxN】份并分别执行fun方法。</p>
-<ul>
-<li>无法控制压缩比的代码</li>
-</ul>
-<p>通过设定简单的阈值来达到滤波压缩的作用</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">'C:\Users\Administrator\Desktop\lena.jpg'</span>);</span><br><span class="line">I = rgb2gray(I);<span class="comment">%针对灰度图像</span></span><br><span class="line">I1 = double(I);</span><br><span class="line">T = <span class="built_in">hadamard</span>(<span class="number">8</span>);<span class="comment">%创建n=8的哈达玛变换核矩阵</span></span><br><span class="line">myFun1 = @(block_struct)T*block_struct.data*T/<span class="number">64</span>;<span class="comment">%块方法，注意1/（8*8）</span></span><br><span class="line">H = blockproc(I1, [<span class="number">8</span> <span class="number">8</span>], myFun1);</span><br><span class="line">H(<span class="built_in">abs</span>(H)&lt;<span class="number">3.5</span>)=<span class="number">0</span>;<span class="comment">%设定阈值，滤除系数小的分量，达到压缩的目的</span></span><br><span class="line">myFun2 = @(block_struct)T*block_struct.data*T;<span class="comment">%逆变换不用/（M*N)</span></span><br><span class="line">I2 = blockproc(H, [<span class="number">8</span> <span class="number">8</span>], myFun2);</span><br><span class="line">subplot(<span class="number">121</span>), imshow(I1,[]), title(<span class="string">'original image'</span>);</span><br><span class="line">subplot(<span class="number">122</span>), imshow(I2,[]), title(<span class="string">'zipped image'</span>);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>可以控制压缩比的代码</p>
-<p><code>B = im2col(A,[m n],block_type)；</code></p>
-<p>重排图像块为矩阵列。重排为列，</p>
-<p>A为重排的矩阵，[m,n]为指定分割的小子块矩阵的尺寸，block_type：‘distinct’：不重叠，不足以的填充0，‘sliding’：可重叠。</p>
-<p><code>[Y, ins]=sort(A,1/2)</code></p>
-<p>对于A排序，若是1—&gt;按照列升序，2—&gt;按照行升序，‘descend’：降序；Y：排序后的矩阵，ins：排序后的索引号=&gt;A = Y*ins</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">'C:\Users\Administrator\Desktop\lena.jpg'</span>);</span><br><span class="line">I = rgb2gray(I);<span class="comment">%针对灰度图像</span></span><br><span class="line">I1 = double(I);</span><br><span class="line">[m n] =<span class="built_in">size</span>(I);</span><br><span class="line">sizi = <span class="number">8</span>;</span><br><span class="line">num = <span class="number">16</span>;<span class="comment">%1-num/(8*8)：压缩比</span></span><br><span class="line"><span class="comment">%分块进行离散沃尔什变换</span></span><br><span class="line">T = <span class="built_in">hadamard</span>(sizi);</span><br><span class="line">myFun1 = @(block_struct)T*block_struct.data*T/(sizi.^<span class="number">2</span>);</span><br><span class="line">hdcoe = blockproc(I1, [sizi, sizi], myFun1);<span class="comment">%分块进行离散沃尔什变换</span></span><br><span class="line"><span class="comment">%重新排列系数</span></span><br><span class="line">coe = im2col(hdcoe,  [sizi, sizi], <span class="string">'distinct'</span>);</span><br><span class="line">coe_t = <span class="built_in">abs</span>(coe);</span><br><span class="line">[Y, ind] = <span class="built_in">sort</span>(coe_t);</span><br><span class="line"><span class="comment">%舍去绝对值较小的系数</span></span><br><span class="line">[m_c, n_c] = <span class="built_in">size</span>(coe);</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:n_c</span><br><span class="line">coe(ind(<span class="number">1</span>:num, <span class="built_in">i</span>), <span class="built_in">i</span>)=<span class="number">0</span>;<span class="comment">%按照列排序，将前16行小的系数都置为0</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">%重建图像</span></span><br><span class="line">re_hdcoe = col2im(coe, [sizi, sizi], [m, n], <span class="string">'distinct'</span>);<span class="comment">%逆变化</span></span><br><span class="line">myFun2 = @(block_struct)T*block_struct.data*T;</span><br><span class="line">re_s = blockproc(re_hdcoe, [sizi, sizi], myFun2);</span><br><span class="line">subplot(<span class="number">121</span>), imshow(I1,[]), title(<span class="string">'original image'</span>);</span><br><span class="line">subplot(<span class="number">122</span>), imshow(re_s,[]), title(<span class="string">'compressed image'</span>);<span class="comment">%压缩比例为75%</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>卡洛南-洛伊变换（K-L变换）</p>
-<p>将在原本的坐标中相关的数据，通过转换到新的坐标系中，使得数据不相关。</p>
-<ul>
-<li>相关函数</li>
-</ul>
-<p><code>[coeff,score,latent,tsquare]  =  princomp(X)</code></p>
-<p>X：输入矩阵 ( nxp)，coeff：对输入矩阵做主成分变换后返回的主成分系数（p x p); score：在新的坐标系中的数据，</p>
-<p><code>B =reshape(A, m , n)</code></p>
-<p>将A矩阵中的元素按照列读取，然后重组成mxn的矩阵。</p>
-<p>图像压缩：</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">'C:\Users\Administrator\Desktop\lena.jpg'</span>);</span><br><span class="line">I = rgb2gray(I);<span class="comment">%针对灰度图像</span></span><br><span class="line">x = double(I)/<span class="number">255</span>;</span><br><span class="line">[m,n]=<span class="built_in">size</span>(x);</span><br><span class="line">y =[];</span><br><span class="line"><span class="comment">%拆解图像</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m/<span class="number">8</span>;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:n/<span class="number">8</span>;</span><br><span class="line">        ii = (<span class="built_in">i</span><span class="number">-1</span>)*<span class="number">8</span>+<span class="number">1</span>;</span><br><span class="line">        jj = (<span class="built_in">j</span><span class="number">-1</span>)*<span class="number">8</span>+<span class="number">1</span>;</span><br><span class="line">        y_app = <span class="built_in">reshape</span>(x(ii:ii+<span class="number">7</span>,jj:jj+<span class="number">7</span>),<span class="number">1</span>,<span class="number">64</span>);</span><br><span class="line">        y=[y;y_app];</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">%将图像的每一个小块分解成64列的一维数组</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%KL变换</span></span><br><span class="line">[COEFF,SCORE,latent] = pca(y);</span><br><span class="line">kl = y * COEFF;</span><br><span class="line"></span><br><span class="line">kl1 = kl;</span><br><span class="line">kl2 = kl;</span><br><span class="line">kl3 = kl;<span class="comment">%矩阵按照从大到小顺序排列</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%置零压缩过程</span></span><br><span class="line">kl1(:, <span class="number">33</span>:<span class="number">64</span>)=<span class="number">0</span>;</span><br><span class="line">kl2(:, <span class="number">17</span>:<span class="number">64</span>)=<span class="number">0</span>;</span><br><span class="line">kl3(:, <span class="number">9</span>:<span class="number">64</span>)=<span class="number">0</span>;<span class="comment">%将9-64列的像素都置零，实现压缩的方法。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%KL逆变换</span></span><br><span class="line">kl_i = kl*COEFF';</span><br><span class="line">kl1_i = kl1*COEFF';</span><br><span class="line">kl2_i = kl2*COEFF';</span><br><span class="line">kl3_i = kl3*COEFF';</span><br><span class="line"></span><br><span class="line">image = <span class="built_in">ones</span>(<span class="number">256</span>,<span class="number">256</span>);</span><br><span class="line">image1 = <span class="built_in">ones</span>(<span class="number">256</span>,<span class="number">256</span>);</span><br><span class="line">image2 = <span class="built_in">ones</span>(<span class="number">256</span>,<span class="number">256</span>);</span><br><span class="line">image3 = <span class="built_in">ones</span>(<span class="number">256</span>,<span class="number">256</span>);</span><br><span class="line"></span><br><span class="line">k=<span class="number">1</span>;</span><br><span class="line"><span class="comment">%重组图像</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m/<span class="number">8</span>;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:n/<span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">        y = <span class="built_in">reshape</span>(kl_i(k, <span class="number">1</span>:<span class="number">64</span>),<span class="number">8</span>,<span class="number">8</span>);</span><br><span class="line">        y1 = <span class="built_in">reshape</span>(kl1_i(k, <span class="number">1</span>:<span class="number">64</span>),<span class="number">8</span>,<span class="number">8</span>);</span><br><span class="line">        y2 = <span class="built_in">reshape</span>(kl2_i(k, <span class="number">1</span>:<span class="number">64</span>),<span class="number">8</span>,<span class="number">8</span>);</span><br><span class="line">        y3 = <span class="built_in">reshape</span>(kl3_i(k, <span class="number">1</span>:<span class="number">64</span>),<span class="number">8</span>,<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">        ii = (<span class="built_in">i</span><span class="number">-1</span>)*<span class="number">8</span>+<span class="number">1</span>;</span><br><span class="line">        jj = (<span class="built_in">j</span><span class="number">-1</span>)*<span class="number">8</span>+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        image(ii:ii+<span class="number">7</span>,jj:jj+<span class="number">7</span>) = y;</span><br><span class="line">        image1(ii:ii+<span class="number">7</span>,jj:jj+<span class="number">7</span>) = y1;</span><br><span class="line">        image2(ii:ii+<span class="number">7</span>,jj:jj+<span class="number">7</span>) = y2;</span><br><span class="line">        image3(ii:ii+<span class="number">7</span>,jj:jj+<span class="number">7</span>) = y3;</span><br><span class="line"></span><br><span class="line">        k=k+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">figure</span></span><br><span class="line">subplot(<span class="number">221</span>);imshow(image);</span><br><span class="line">subplot(<span class="number">222</span>);imshow(image1);</span><br><span class="line">subplot(<span class="number">223</span>);imshow(image2);</span><br><span class="line">subplot(<span class="number">224</span>);imshow(image3);</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -1324,7 +2017,7 @@ edge_n = imfilter(I,N,<span class="string">'symmetric'</span>,<span class="strin
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
